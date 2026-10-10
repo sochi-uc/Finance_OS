@@ -7,6 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Ledger">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -127,7 +129,8 @@ input,textarea,select{font:inherit}
 .nav-divider{height:1px;background:var(--c-border);margin:8px 0}
 
 .nav-footer{
-  margin-top:auto;padding-top:12px;
+  position: fixed; bottom: 20px; left: 20px; width: calc(var(--nav-w) - 40px); z-index: 100;
+  padding-top:12px;
   border-top:1px solid var(--c-border);
   display:flex;align-items:center;justify-content:space-between;
 }
@@ -135,7 +138,16 @@ input,textarea,select{font:inherit}
   display:flex;align-items:center;gap:6px;
   font-size:11px;color:var(--c-ink3);padding:0 6px;
 }
-.live-dot{width:6px;height:6px;border-radius:50%;background:var(--c-gain);flex-shrink:0}
+
+.live-dot {
+  width:6px;height:6px;border-radius:50%;background:var(--c-gain);flex-shrink:0;
+  animation: pulse-dot 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
 .ctrl-group{display:flex;gap:4px}
 .ctrl-btn{
   width:30px;height:30px;border-radius:8px;
@@ -470,6 +482,26 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
 }
 .analysis-card b{color:var(--c-ink)}
 
+
+.card {
+  animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Staggering up to 10 cards */
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4) { animation-delay: 0.2s; }
+.card:nth-child(5) { animation-delay: 0.25s; }
+.card:nth-child(6) { animation-delay: 0.3s; }
+.card:nth-child(7) { animation-delay: 0.35s; }
+.card:nth-child(8) { animation-delay: 0.4s; }
+.card:nth-child(9) { animation-delay: 0.45s; }
+.card:nth-child(10) { animation-delay: 0.5s; }
+
 /* ─── MOBILE NAV ───────────────────────────────────────── */
 @media(max-width:639px){
   #nav{
@@ -483,7 +515,7 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
   }
   [data-theme="light"] #nav{background:rgba(255,255,255,.88)}
   .brand,.nav-section,.nav-divider{display:none}
-  .nav-footer { position: fixed; top: 12px; right: 12px; flex-direction: row; z-index: 9999; display: flex; padding: 4px 8px; background: var(--c-s1); border: 1px solid var(--c-border); border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .nav-footer { position: fixed; top: env(safe-area-inset-top, 12px); right: 12px; margin-top: 12px; flex-direction: row; z-index: 9999; display: flex; padding: 4px 8px; background: rgba(10,10,10,0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--c-border); border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); } [data-theme="light"] .nav-footer { background: rgba(255,255,255,0.8); }
   .nav-item{
     flex-direction:column;gap:3px;
     padding:10px 6px 8px;font-size:10px;
@@ -523,8 +555,33 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
 <script>
 'use strict';
 
+const ACCENTS = [
+  { c: '#6e3ff3', h: '#7c4ff5' },
+  { c: '#0a84ff', h: '#1e90ff' },
+  { c: '#ff453a', h: '#ff5c53' },
+  { c: '#ff9f0a', h: '#ffb340' },
+  { c: '#30d158', h: '#42d86a' },
+  { c: '#bf5af2', h: '#ca71f4' },
+];
+let currentAccentIdx = parseInt(localStorage.getItem('accentIdx')) || 0;
+
+function applyAccent() {
+  const a = ACCENTS[currentAccentIdx];
+  document.documentElement.style.setProperty('--c-accent', a.c);
+  document.documentElement.style.setProperty('--c-accent-h', a.h);
+}
+applyAccent();
+
+function toggleAccent() {
+  currentAccentIdx = (currentAccentIdx + 1) % ACCENTS.length;
+  localStorage.setItem('accentIdx', currentAccentIdx);
+  applyAccent();
+}
+
+
 /* ─── SVG ICON LIBRARY ─────────────────────────────────── */
 const IC = {
+  drop: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>`,
   home:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>`,
   chart:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>`,
   dollar:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>`,
@@ -1090,14 +1147,24 @@ function render(opts={}) {
     </div>
     <div class="nav-divider"></div>
     ${TABS.map(t=>`<a href="#${t.id}" class="nav-item${t.id===tab?' active':''}" aria-current="${t.id===tab?'page':'false'}">${t.icon}<span>${t.label}</span></a>`).join('')}
-    <div class="nav-divider"></div>
-    <div class="nav-footer">
+    <div class="nav-divider"></div>`;
+
+  // Inject a separate floating control for mobile (and desktop footer) outside nav
+  const controlsHTML = `
+    <div class="nav-footer" id="floating-controls">
       <div class="live-badge"><span class="live-dot"></span><span id="sync-lbl">Live</span></div>
       <div class="ctrl-group">
         <button class="ctrl-btn" id="ctrl-eye"   onclick="togglePrivacy()" title="${priv?'Show numbers':'Hide numbers'}">${priv?IC.eyeoff:IC.eye}</button>
         <button class="ctrl-btn" id="ctrl-theme" onclick="toggleTheme()"   title="${darkMode?'Light mode':'Dark mode'}">${darkMode?IC.sun:IC.moon}</button>
+        <button class="ctrl-btn" id="ctrl-color" onclick="toggleAccent()" title="Change Color">${IC.drop}</button>
       </div>
-    </div>`;
+    </div>
+  `;
+  
+  if(!$('#floating-controls')) {
+      $('#app').insertAdjacentHTML('beforeend', controlsHTML);
+  }
+
 
   // MAIN
   const main = $('#main');
