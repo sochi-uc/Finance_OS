@@ -1,0 +1,13 @@
+services:
+  finance:
+    build: .
+    container_name: sochi-finance-os
+    restart: always
+    ports: ["8787:8787"]
+    env_file: .env
+    environment: { DATA_DIR: /data }
+    volumes:
+      - ./data:/data          # SQLite lives here (back this up)
+      - ./docs:/app/docs
+      - ./web:/app/web
+      - ./server:/app/server
