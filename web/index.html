@@ -921,7 +921,7 @@ function renderChartCard(k) {
   const range = Math.max(c.resistance - c.support, 1);
   const pct = Math.min(Math.max(((c.price - c.support) / range) * 100, 0), 100);
   return `
-  <div class="card c6" style="display:flex; flex-direction:column; justify-content:space-between;">
+  <div class="card c6" style="display:flex; flex-direction:column; justify-content:space-between; cursor:pointer;" data-act="chart-detail" data-t="${k}">
     <div>
       <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
         <div>
@@ -1216,39 +1216,39 @@ foresight(d) {
 
       <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
         <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
-          <span><b>SEPLAT Energy</b> (Entered Dec 2025)</span>
+          <span style="cursor:pointer;" data-act="chart-detail" data-t="SEPLAT"><b>SEPLAT Energy</b> ↗ (Entered Dec 2025)</span>
           <span style="color:var(--c-gain); font-weight:700;">+134%</span>
         </div>
         <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
-          <span><b>UPDC / UPDC REIT</b> (Sub-1 year play)</span>
+          <span style="cursor:pointer;" data-act="chart-detail" data-t="UPDC"><b>UPDC / UPDC REIT</b> ↗ (Sub-1 year play)</span>
           <span style="color:var(--c-gain); font-weight:700;">+170%</span>
         </div>
         <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
-          <span><b>BUA Foods (BUAFOODS)</b></span>
+          <span style="cursor:pointer;" data-act="chart-detail" data-t="BUAFOODS"><b>BUA Foods (BUAFOODS)</b> ↗</span>
           <span style="color:var(--c-gain); font-weight:700;">+120%</span>
         </div>
         <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
-          <span><b>Julius Berger (JBERGER)</b></span>
+          <span style="cursor:pointer;" data-act="chart-detail" data-t="JBERGER"><b>Julius Berger (JBERGER)</b> ↗</span>
           <span style="color:var(--c-gain); font-weight:700;">+108%</span>
         </div>
         <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px; border-left:2px solid var(--c-accent);">
-          <span><b>Aradel Holdings (ARADEL)</b> (Owned)</span>
+          <span style="cursor:pointer;" data-act="chart-detail" data-t="ARADEL"><b>Aradel Holdings (ARADEL)</b> ↗ (Owned)</span>
           <span style="color:var(--c-gain); font-weight:700;">+170% Peak (+90% current)</span>
         </div>
         <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
-          <span><b>BUA Cement (BUACEMENT)</b></span>
+          <span style="cursor:pointer;" data-act="chart-detail" data-t="BUACEMENT"><b>BUA Cement (BUACEMENT)</b> ↗</span>
           <span style="color:var(--c-gain); font-weight:700;">+170% Peak (+80% current)</span>
         </div>
         <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
-          <span><b>NGX Group (NGXGROUP)</b> (₦61 → ₦165)</span>
+          <span style="cursor:pointer;" data-act="chart-detail" data-t="NGXGROUP"><b>NGX Group (NGXGROUP)</b> ↗ (₦61 → ₦165)</span>
           <span style="color:var(--c-gain); font-weight:700;">+120%</span>
         </div>
         <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
-          <span><b>Transcorp / PZ Cussons</b> (₦32 → ₦100+)</span>
+          <span style="cursor:pointer;" data-act="chart-detail" data-t="TRANSCORP"><b>Transcorp / PZ Cussons</b> ↗ (₦32 → ₦100+)</span>
           <span style="color:var(--c-gain); font-weight:700;">+145% Peak</span>
         </div>
         <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
-          <span><b>May & Baker (MAYBAKER)</b> (Dec → Feb ₦45)</span>
+          <span style="cursor:pointer;" data-act="chart-detail" data-t="MAYBAKER"><b>May & Baker (MAYBAKER)</b> ↗ (Dec → Feb ₦45)</span>
           <span style="color:var(--c-gain); font-weight:700;">+90% to +100%</span>
         </div>
       </div>
@@ -1831,6 +1831,57 @@ function openDrawer(title, body) {
 const Hld=t=>(S.holdings||[]).find(h=>h.ticker===t);
 
 const ACT={
+  'chart-detail'(b){
+    const k=b.dataset.t;
+    const c=CHART_ANALYSES[k];
+    if(!c)return;
+    const range=Math.max(c.resistance-c.support,1);
+    const pct=Math.min(Math.max(((c.price-c.support)/range)*100,0),100);
+    openDrawer(`${k} · Technical & Fundamental Dossier`,`
+      <div class="drw-section">
+        <div class="drw-section-title">Overview</div>
+        <div class="drw-row"><span class="drw-row-label">Company</span><b class="drw-row-val">${c.name}</b></div>
+        <div class="drw-row"><span class="drw-row-label">Price / Zone</span><b class="drw-row-val">${k==='NIDF'?'₦'+c.price.toFixed(2):fmtN(c.price)}</b></div>
+        <div class="drw-row"><span class="drw-row-label">Market Stance</span><b class="drw-row-val" style="color:${c.statusCol}">${c.status}</b></div>
+      </div>
+
+      <div class="drw-section">
+        <div class="drw-section-title">Technical Chart Setup (Engr. Achie Framework)</div>
+        <div style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--c-ink3); margin-bottom:4px;">
+            <span>Support Floor: <b>${fmtN(c.support)}</b></span>
+            <span style="color:var(--c-ink2);">${pct.toFixed(0)}% of Range</span>
+            <span>Resistance Ceiling: <b>${fmtN(c.resistance)}</b></span>
+          </div>
+          <div style="height:6px; background:var(--c-s3); border-radius:99px; position:relative; overflow:hidden;">
+            <div style="position:absolute; left:0; top:0; bottom:0; width:${pct}%; background:linear-gradient(90deg, var(--c-gain), var(--c-accent)); border-radius:99px;"></div>
+          </div>
+        </div>
+        <div class="drw-row"><span class="drw-row-label">Moving Averages</span><b class="drw-row-val" style="font-size:11px;">${c.ma}</b></div>
+        <div class="drw-row"><span class="drw-row-label">Volume Trigger</span><b class="drw-row-val" style="font-size:11px;">${c.volume}</b></div>
+      </div>
+
+      <div class="drw-section">
+        <div class="drw-section-title">Strategic Setup & Thesis</div>
+        <div class="analysis-card" style="margin-bottom:8px;">
+          ${c.setup}
+        </div>
+        <div class="analysis-card" style="border-left-color:var(--c-gain);">
+          <b>Execution Plan:</b> ${c.action}
+        </div>
+      </div>
+
+      <div class="drw-section">
+        <div class="drw-section-title">3-Pillar Risk Screener Verification</div>
+        <div style="font-size:12px; color:var(--c-ink2); line-height:1.6; background:var(--c-s2); padding:10px 12px; border-radius:8px; border:1px solid var(--c-border);">
+          <div>✓ <b>Earnings & Margins:</b> Multi-year top-line resilience and margin preservation confirmed.</div>
+          <div>✓ <b>Relative Multiples:</b> Multiple expansion potential benchmarked against NGX peer group.</div>
+          <div>✓ <b>Balance Sheet Health:</b> Solvency protected; sustainable free cash flow generation.</div>
+        </div>
+      </div>
+    `);
+  },
+
   detail(b){
     const h=Hld(b.dataset.t);if(!h)return;
     const pl=h.avg>0?(h.price/h.avg-1)*100:null;
