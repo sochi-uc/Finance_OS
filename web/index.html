@@ -616,26 +616,7 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
 .card:nth-child(10) { animation-delay: 0.5s; }
 
 
-.floating-controls {
-  position: fixed;
-  top: max(env(safe-area-inset-top, 16px), 16px);
-  right: max(env(safe-area-inset-right, 16px), 16px);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 6px 14px;
-  background: var(--c-s1);
-  border: 1px solid var(--c-border);
-  border-radius: 99px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  transition: all 0.3s ease;
-}
-[data-theme="light"] .floating-controls {
-  background: rgba(255,255,255,0.85);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-}
+
 .ctrl-divider {
   width: 1px; height: 16px; background: var(--c-border);
 }
@@ -649,42 +630,186 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
 .ctrl-btn:hover { background: var(--c-s2); color: var(--c-ink); transform: scale(1.05); }
 .ctrl-btn:active { transform: scale(0.9); }
 
-/* ─── MOBILE NAV ───────────────────────────────────────── */
-@media(max-width:639px){
-  #nav{
-    position:fixed;bottom:0;left:0;right:0;top:auto;
-    height:auto;width:100%;flex-direction:row;
-    justify-content:space-around;align-items:stretch;
-    padding:0 4px calc(4px + var(--sb));
-    border-right:none;border-top:1px solid var(--c-border);
-    background:rgba(10,10,10,.88);
-    backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  }
-  [data-theme="light"] #nav{background:rgba(255,255,255,.88)}
-  .brand,.nav-section,.nav-divider{display:none}
-  
-  .nav-item{
-    flex-direction:column;gap:3px;
-    padding:10px 6px 8px;font-size:10px;
-    min-height:54px;border-radius:0;justify-content:center;
-    align-items:center;margin-bottom:0;flex:1;
-  }
-  .nav-item svg{width:20px;height:20px}
-  .nav-item.active{background:transparent;color:var(--c-accent)}
-  .nav-item.active svg{opacity:1;stroke:var(--c-accent)}
-  #main{padding-bottom:calc(72px + var(--sb))}
-  .c8,.c4,.c6{grid-column:span 12}
-  .c3{grid-column:span 6}
-  .kpi-strip{border-radius:10px}
-  .kpi{min-width:100px;padding:12px}
-  .kpi-val{font-size:16px}
-  .qbar{flex-direction:column}
+/* ─── DESKTOP DOCKED SIDEBAR FOOTER ─── */
+.nav-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--c-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-@media(min-width:640px) and (max-width:1023px){
-  :root{--nav-w:200px}
-  .c8{grid-column:span 12}
-  .c4{grid-column:span 12}
-  .c3{grid-column:span 6}
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--c-ink3);
+  font-weight: 600;
+}
+.ctrl-group {
+  display: flex;
+  gap: 4px;
+}
+.ctrl-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  color: var(--c-ink3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ctrl-btn:hover {
+  background: var(--c-s2);
+  color: var(--c-ink);
+  transform: scale(1.05);
+}
+.ctrl-btn:active {
+  transform: scale(0.9);
+}
+
+/* ─── MOBILE TOP APP BAR ─── */
+.mobile-top-bar {
+  display: none;
+}
+@media (max-width: 768px) {
+  .mobile-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: calc(var(--st) + 12px) 16px 12px;
+    background: rgba(14, 14, 18, 0.88);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border-bottom: 1px solid var(--c-border);
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    margin: -16px -16px 16px -16px;
+  }
+  .mobile-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+  }
+  .mobile-ctrls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ctrl-divider {
+    width: 1px;
+    height: 14px;
+    background: var(--c-border);
+  }
+}
+
+/* ─── UNIFIED RESPONSIVE LAYOUT ENGINE (768px BREAKPOINT) ─── */
+@media (max-width: 768px) {
+  #app {
+    flex-direction: column;
+  }
+  #nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    height: calc(56px + var(--sb));
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 4px var(--sb);
+    border-right: none;
+    border-top: 1px solid var(--c-border);
+    background: rgba(12, 12, 16, 0.92);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    z-index: 100;
+  }
+  [data-theme="light"] #nav {
+    background: rgba(255, 255, 255, 0.92);
+  }
+  .brand, .nav-footer, .nav-divider {
+    display: none !important;
+  }
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .nav-item {
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px 4px 6px;
+    font-size: 10px;
+    min-height: 48px;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    margin: 0;
+    text-align: center;
+  }
+  .nav-item svg { width: 18px; height: 18px; }
+  .nav-item.active { background: transparent; color: var(--c-accent); }
+  .nav-item.active svg { opacity: 1; stroke: var(--c-accent); }
+
+  #main {
+    padding: 16px 16px calc(76px + var(--sb)) 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .grid {
+    gap: 12px;
+  }
+  .c12, .c8, .c6, .c4 {
+    grid-column: span 12 !important;
+  }
+  .c3 {
+    grid-column: span 6 !important;
+  }
+  .kpi-strip {
+    border-radius: 12px;
+  }
+  .ph {
+    margin-bottom: 18px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .ph-title {
+    font-size: 24px !important;
+  }
+  .card {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .c3 {
+    grid-column: span 12 !important;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root { --nav-w: 220px; }
+  .c8 { grid-column: span 12; }
+  .c6 { grid-column: span 12; }
+  .c4 { grid-column: span 6; }
+  .c3 { grid-column: span 6; }
+  #main { padding: 24px 28px 48px; }
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
@@ -1931,30 +2056,40 @@ function render(opts={}) {
       </div>
     </div>
     <div class="nav-divider"></div>
-    ${TABS.map(t=>`<a href="#${t.id}" class="nav-item${t.id===tab?' active':''}" aria-current="${t.id===tab?'page':'false'}">${t.icon}<span>${t.label}</span></a>`).join('')}
-    <div class="nav-divider"></div>`;
-
-  // Inject a separate floating control for mobile (and desktop footer) outside nav
-  const controlsHTML = `
-    <div class="floating-controls" id="floating-controls">
+    <div class="nav-links">
+      ${TABS.map(t=>`<a href="#${t.id}" class="nav-item${t.id===tab?' active':''}" aria-current="${t.id===tab?'page':'false'}">${t.icon}<span>${t.label}</span></a>`).join('')}
+    </div>
+    <div class="nav-footer">
       <div class="live-badge"><span class="live-dot"></span><span id="sync-lbl">Live</span></div>
-      <div class="ctrl-divider"></div>
       <div class="ctrl-group">
-        <button class="ctrl-btn" id="ctrl-eye"   onclick="togglePrivacy()" title="${priv?'Show numbers':'Hide numbers'}">${priv?IC.eyeoff:IC.eye}</button>
-        <button class="ctrl-btn" id="ctrl-theme" onclick="toggleTheme()"   title="${darkMode?'Light mode':'Dark mode'}">${darkMode?IC.sun:IC.moon}</button>
+        <button class="ctrl-btn" id="ctrl-eye" onclick="togglePrivacy()" title="${priv?'Show numbers':'Hide numbers'}">${priv?IC.eyeoff:IC.eye}</button>
+        <button class="ctrl-btn" id="ctrl-theme" onclick="toggleTheme()" title="${darkMode?'Light mode':'Dark mode'}">${darkMode?IC.sun:IC.moon}</button>
         <button class="ctrl-btn" id="ctrl-color" onclick="toggleAccent()" title="Change Color">${IC.drop}</button>
       </div>
-    </div>
-  `;
-  
-  if(!$('#floating-controls')) {
-      $('#app').insertAdjacentHTML('beforeend', controlsHTML);
-  }
+    </div>`;
 
+  // Remove obsolete floating controls if present
+  const oldFloat = document.getElementById('floating-controls');
+  if (oldFloat) oldFloat.remove();
 
   // MAIN
   const main = $('#main');
-  main.innerHTML = (V[tab]||V.home)(d);
+  const mobileTopBar = `
+    <div class="mobile-top-bar" id="mobile-top-bar">
+      <div class="mobile-brand">
+        <span class="brand-logo" style="width:24px;height:24px;">${IC.gem}</span>
+        <span>Sochi</span>
+      </div>
+      <div class="mobile-ctrls">
+        <div class="live-badge"><span class="live-dot"></span>Live</div>
+        <div class="ctrl-divider"></div>
+        <button class="ctrl-btn" onclick="togglePrivacy()">${priv?IC.eyeoff:IC.eye}</button>
+        <button class="ctrl-btn" onclick="toggleTheme()">${darkMode?IC.sun:IC.moon}</button>
+        <button class="ctrl-btn" onclick="toggleAccent()">${IC.drop}</button>
+      </div>
+    </div>
+  `;
+  main.innerHTML = mobileTopBar + (V[tab]||V.home)(d);
 
   if (opts.animate) {
     main.querySelectorAll('.card').forEach((c,i) => {
