@@ -1,7 +1,24 @@
 'use strict';
 
+import {
+  fmtN, fmtD, N, D, Pct, bcl, ago, dFmt, sum, isUSD, esc, IC, TABS, PALETTE, QUOTES, hVal, fx, afx, startQuotes
+} from './config.js';
+import { CHART_POINTS, CHART_ANALYSES, ANALYSES } from './data.js';
+import { infoBtn } from './explainers.js';
+import {
+  makeSparklineSVG, renderProChartStation, renderChartCard, activeTerminalTicker, activeChartFilter,
+  selectTerminalStock, donut, lineChart, calHTML, hrow
+} from './charts.js';
+
+// Reactive state proxy referencing live window.S
+const S = new Proxy({}, {
+  get(_, prop) {
+    return (typeof window !== 'undefined' && window.S) ? window.S[prop] : undefined;
+  }
+});
+
 /* ─── VIEWS ────────────────────────────────────────────── */
-const V = {
+export const V = {
 
 foresight(d) {
   return `
@@ -287,7 +304,7 @@ home(d) {
 
     <div class="card c12" id="cal-home">
       <div class="card-label">Dividend Calendar ${infoBtn('dividend_calendar', 'Dividend Calendar')}</div>
-      ${calHTML(calY,calM)}
+      ${calHTML()}
     </div>
 
     <div class="card c12">
@@ -324,7 +341,7 @@ ngn(d) {
     </div>
     <div class="card c12" id="cal-ngn">
       <div class="card-label">Dividend Calendar ${infoBtn('dividend_calendar', 'Dividend Calendar')}</div>
-      ${calHTML(calY,calM)}
+      ${calHTML()}
     </div>
   </div>`;
 },
@@ -455,3 +472,7 @@ log() {
 }
 
 }; /* end V */
+
+if (typeof window !== 'undefined') {
+  window.V = V;
+}

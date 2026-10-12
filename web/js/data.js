@@ -1,7 +1,5 @@
-'use strict';
-
 // Chart Trajectory Points & Strategy Categories
-const CHART_POINTS = {
+export const CHART_POINTS = {
   ARADEL:     [550, 620, 710, 950, 1200, 1530, 1377],
   UCAP:       [15.2, 16.4, 17.8, 16.5, 17.2, 16.8, 17.05],
   ZENITHBANK: [112, 115, 119, 124, 128, 132, 135.4],
@@ -15,7 +13,7 @@ const CHART_POINTS = {
   NIDF:       [105, 110, 113.4, 128, 142, 155, 162]
 };
 
-const CHART_ANALYSES = {
+export const CHART_ANALYSES = {
   ARADEL: {
     name: "Aradel Holdings PLC",
     price: 1377.00,
@@ -150,7 +148,7 @@ const CHART_ANALYSES = {
   }
 };
 
-const ANALYSES = {
+export const ANALYSES = {
   UCAP: `<b>Fundamental Thesis:</b> UCAP is a premier tier-2 investment bank capturing massive advisory fees from bank recaps & the Dangote Refinery IPO.<br>
   <div style="margin-top:8px;padding:8px 10px;background:var(--c-s2);border-radius:6px;border:1px solid var(--c-border);font-size:12px;line-height:1.5;">
     <div><b>Chart Setup:</b> Symmetrical triangle coiling near ₦17.05</div>
@@ -178,3 +176,7 @@ const ANALYSES = {
   NOBEL: `<b>Fixed-Income Liquidity Tranche:</b> ₦216,840 allocated in structured capital pooling. Expected maturity payout: ~₦390,000 – ₦500,000 (Oct 2026 – Feb 2027) yielding capital expansion to buffer cash reserves without liquidating public equities.`,
   P1MILLION: `<b>Private Venture Capital Allocation:</b> ₦400,000 active working seed capital in private enterprise. Cash distributions and dividend yield systematically funneled into NGX compounding equities (UCAP, Aradel).`,
 };
+
+if (typeof window !== 'undefined') {
+  Object.assign(window, { CHART_POINTS, CHART_ANALYSES, ANALYSES });
+}

@@ -1,6 +1,8 @@
-'use strict';
+import { fmtN, fmtD, esc, num, N, D, Pct, bcl, ago, dFmt, sum, isUSD, hVal, IC, PALETTE, MONTHS, WDAYS, DIVS, $ } from './config.js';
+import { infoBtn, openExplainer } from './explainers.js';
+import { CHART_POINTS, CHART_ANALYSES } from './data.js';
 
-function makeSparklineSVG(pts, support, resistance, col='var(--c-gain)', h=46) {
+export function makeSparklineSVG(pts, support, resistance, col='var(--c-gain)', h=46) {
   if (!pts || pts.length < 2) return '';
   const min = Math.min(...pts, support) * 0.96;
   const max = Math.max(...pts, resistance) * 1.04;
@@ -46,8 +48,8 @@ function makeSparklineSVG(pts, support, resistance, col='var(--c-gain)', h=46) {
   </div>`;
 }
 
-let activeChartFilter = 'all';
-function setChartFilter(f) {
+export let activeChartFilter = 'all';
+export function setChartFilter(f) {
   activeChartFilter = f;
   const grid = document.getElementById('chart-grid');
   if (!grid) return;
@@ -66,9 +68,9 @@ function setChartFilter(f) {
 }
 
 
-let activeTerminalTicker = 'ARADEL';
+export let activeTerminalTicker = 'ARADEL';
 
-function selectTerminalStock(ticker) {
+export function selectTerminalStock(ticker) {
   activeTerminalTicker = ticker;
   const container = document.getElementById('pro-chart-station-container');
   if (container) {
@@ -76,7 +78,7 @@ function selectTerminalStock(ticker) {
   }
 }
 
-function renderProChartStation(k) {
+export function renderProChartStation(k) {
   const c = CHART_ANALYSES[k];
   if (!c) return '';
   const pts = CHART_POINTS[k] || [c.support, c.price, c.resistance];
@@ -197,7 +199,7 @@ function renderProChartStation(k) {
   </div>`;
 }
 
-function renderChartCard(k) {
+export function renderChartCard(k) {
   const c = CHART_ANALYSES[k];
   if (!c) return '';
   const range = Math.max(c.resistance - c.support, 1);
@@ -245,7 +247,7 @@ function renderChartCard(k) {
 }
 
 /* ─── CHARTS ───────────────────────────────────────────── */
-function donut(items) {
+export function donut(items) {
   const T=sum(items,i=>i.v)||1; let off=25;
   const segs=items.map((it,k)=>{
     const p=it.v/T*100, c=PALETTE[k%PALETTE.length];
@@ -255,7 +257,8 @@ function donut(items) {
   });
   return `<svg viewBox="0 0 42 42" width="96" style="flex:none">${segs.join('')}</svg>`;
 }
-function lineChart(pts) {
+
+export function lineChart(pts) {
   if(!pts||pts.length<2) return `<p style="color:var(--c-ink3);font-size:13px;padding:8px 0">Tap "Record snapshot" monthly to build your history chart.</p>`;
   const W=480,H=130, vs=pts.map(p=>p.v);
   const mx=Math.max(...vs),mn=Math.min(...vs);
@@ -264,7 +267,7 @@ function lineChart(pts) {
   const d=pts.map((p,i)=>`${i?'L':'M'}${X(i).toFixed(1)},${Y(p.v).toFixed(1)}`).join('');
   return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="overflow:visible">
     <defs><linearGradient id="lg" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="${PALETTE[0]}" stop-opacity=".18"/>
+      <stop offset="0%" stop-color="${PALETTE[0]}" stop-opacity=".18"/>
       <stop offset="1" stop-color="${PALETTE[0]}" stop-opacity="0"/>
     </linearGradient></defs>
     <path d="${d}L${X(pts.length-1).toFixed(1)},${H-16}L${X(0).toFixed(1)},${H-16}Z" fill="url(#lg)"/>
@@ -275,7 +278,7 @@ function lineChart(pts) {
 }
 
 /* ─── CALENDAR ─────────────────────────────────────────── */
-function calHTML(y,m) {
+export function calHTML(y = (typeof window !== 'undefined' && window.calY ? window.calY : new Date().getFullYear()), m = (typeof window !== 'undefined' && window.calM !== undefined ? window.calM : new Date().getMonth())) {
   const now=new Date(), fd=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate();
   const evs={};
   DIVS.forEach(d=>{ if(d.m===m){if(!evs[15])evs[15]=[]; evs[15].push(`${d.label} ${d.type}`);} });
@@ -309,7 +312,7 @@ function calHTML(y,m) {
 }
 
 /* ─── HOLDING ROW ──────────────────────────────────────── */
-function hrow(h) {
+export function hrow(h) {
   const pl = h.avg>0 ? (h.price/h.avg-1)*100 : null;
   return `<button class="h-row" data-act="detail" data-t="${esc(h.ticker)}">
     <div>
@@ -323,3 +326,18 @@ function hrow(h) {
     ${pl!==null?`<span class="badge ${bcl(pl)}">${Pct(pl)}</span>`:`<span class="badge b-neu">—</span>`}
   </button>`;
 }
+
+if (typeof window !== 'undefined') {
+  Object.assign(window, {
+    makeSparklineSVG,
+    setChartFilter,
+    selectTerminalStock,
+    renderProChartStation,
+    renderChartCard,
+    donut,
+    lineChart,
+    calHTML,
+    hrow,
+  });
+}
+

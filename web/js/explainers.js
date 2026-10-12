@@ -1,12 +1,12 @@
-'use strict';
+import { IC, $, esc } from './config.js';
 
 /* ─── TACTILE INFO BUTTON HELPER ───────────────────────── */
-function infoBtn(key, title='View breakdown & intelligence') {
+export function infoBtn(key, title='View breakdown & intelligence') {
   return `<button class="info-btn" data-info="${key}" title="${title}" aria-label="${title}" type="button">${IC.info}</button>`;
 }
 
 /* ─── EXPLAINERS DICTIONARY & INTELLIGENCE ─────────────── */
-const EXPLAINERS = {
+export const EXPLAINERS = {
   net_worth: {
     tag: 'Portfolio Intelligence',
     title: 'Total Net Worth & Capital Base',
@@ -146,7 +146,15 @@ const EXPLAINERS = {
 };
 
 /* ─── OPEN EXPLAINER MODAL ─────────────────────────────── */
-function openExplainer(key) {
+export function closeExplainer() {
+  const el = $('#explainer');
+  if (el) {
+    el.classList.remove('open');
+    el.innerHTML = '';
+  }
+}
+
+export function openExplainer(key) {
   const item = EXPLAINERS[key];
   if (!item) return;
   const el = $('#explainer');
@@ -190,14 +198,20 @@ function openExplainer(key) {
     </div>
   `;
   el.classList.add('open');
-  const close = () => {
-    el.classList.remove('open');
-    el.innerHTML = '';
-    document.removeEventListener('keydown', onEsc);
-  };
-  function onEsc(e) { if (e.key === 'Escape') close(); }
+
+  function onEsc(e) {
+    if (e.key === 'Escape') {
+      closeExplainer();
+      document.removeEventListener('keydown', onEsc);
+    }
+  }
   document.addEventListener('keydown', onEsc);
-  el.querySelector('.exp-scrim').onclick = close;
-  $('#exp-close').onclick = close;
-  $('#exp-done').onclick = close;
+  el.querySelector('.exp-scrim').onclick = closeExplainer;
+  $('#exp-close').onclick = closeExplainer;
+  $('#exp-done').onclick = closeExplainer;
 }
+
+if (typeof window !== 'undefined') {
+  Object.assign(window, { EXPLAINERS, infoBtn, openExplainer, closeExplainer });
+}
+

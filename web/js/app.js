@@ -1,33 +1,48 @@
 'use strict';
 
+import {
+  IC, TABS, ACCENTS, applyAccent, toggleAccent, fmtN, fmtD, N, D, Pct, bcl, ago, dFmt, sum, isUSD, fx, afx, hVal, $, esc, num
+} from './config.js';
+import { CHART_ANALYSES, CHART_POINTS, ANALYSES } from './data.js';
+import { openExplainer, closeExplainer } from './explainers.js';
+import { makeSparklineSVG, calHTML } from './charts.js';
+import { V } from './views.js';
+import * as API from './api.js';
+
 /* ─── STATE ────────────────────────────────────────────── */
-let S          = {};
-let token      = localStorage.getItem('tok') || '';
+export let S        = {};
+if (typeof window !== 'undefined') window.S = S;
+
 let tab        = location.hash.slice(1) || 'home';
-let calY       = new Date().getFullYear();
-let calM       = new Date().getMonth();
+export let calY     = new Date().getFullYear();
+export let calM     = new Date().getMonth();
+if (typeof window !== 'undefined') {
+  window.calY = calY;
+  window.calM = calM;
+}
+
 let isFirst    = true;
 let priv       = localStorage.getItem('priv') !== 'off'; // default hidden
 let darkMode   = localStorage.getItem('theme') !== 'light';
 
 /* ─── THEME + PRIVACY ──────────────────────────────────── */
-function applyTheme() {
+export function applyTheme() {
   document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
 }
-function applyPrivacy() {
+export function applyPrivacy() {
   document.body.classList.toggle('private', priv);
 }
-function togglePrivacy() {
+export function togglePrivacy() {
   priv = !priv;
   localStorage.setItem('priv', priv ? 'on' : 'off');
   applyPrivacy(); updateControls();
 }
-function toggleTheme() {
+export function toggleTheme() {
   darkMode = !darkMode;
   localStorage.setItem('theme', darkMode ? 'dark' : 'light');
   applyTheme(); updateControls();
 }
-function updateControls() {
+export function updateControls() {
   const eye = document.getElementById('ctrl-eye');
   const th  = document.getElementById('ctrl-theme');
   if (eye) eye.innerHTML = priv ? IC.eyeoff : IC.eye;
@@ -35,32 +50,13 @@ function updateControls() {
 }
 applyTheme(); applyPrivacy();
 
-/* ─── API ──────────────────────────────────────────────── */
-async function api(method, path, body) {
-  try {
-    const r = await fetch('/api'+path, {
-      method,
-      headers:{'content-type':'application/json','x-actor':'user',...(token?{authorization:'Bearer '+token}:{})},
-      body: body ? JSON.stringify(body) : undefined,
-    });
-    if (r.status===401) {
-      token = prompt('Access token:') || '';
-      localStorage.setItem('tok', token);
-      return token ? api(method, path, body) : {error:'Auth required'};
-    }
-    const j = await r.json();
-    if (!r.ok) return {error: j.error || 'Request failed'};
-    return j;
-  } catch { return {error:'Network error — server may be down'}; }
-}
+/* ─── API DELEGATE ─────────────────────────────────────── */
+const api = API.api;
 
 /* ─── DERIVED STATE ────────────────────────────────────── */
-const fx   = () => +(S.settings?.fx)||1500;
-const afx  = () => (S.settings?.usd_funded>0) ? S.settings.ngn_spent/S.settings.usd_funded : fx();
-const hVal = h => isUSD(h) ? h.units*h.price*fx() : h.units*h.price;
-const hCost= h => h.units*h.avg*(isUSD(h)?afx():1);
+const hCost = h => h.units*h.avg*(isUSD(h)?afx():1);
 
-function derive() {
+export function derive() {
   const h=S.holdings||[], cf=S.cashflow||[], set=S.settings||{};
   const ngx  = h.filter(x=>x.class==='NGX');
   const priv = h.filter(x=>x.class==='PRIVATE');
@@ -147,6 +143,10 @@ function wireCalendar() {
       calM += btn.dataset.cal==='next'?1:-1;
       if(calM>11){calM=0;calY++;}
       if(calM<0) {calM=11;calY--;}
+      if (typeof window !== 'undefined') {
+        window.calY = calY;
+        window.calM = calM;
+      }
       ['#cal-home','#cal-ngn'].forEach(sel=>{
         const el=$(sel);
         if(!el)return;
@@ -484,12 +484,13 @@ addEventListener('hashchange',()=>{
 
 /* ─── DATA LOAD ────────────────────────────────────────── */
 let loading=false;
-async function load(){
+export async function load(){
   if(loading)return;loading=true;
   try{
-    const state=await api('GET','/state');
+    const state=await API.fetchState();
     if(!state.error){
       S=state;
+      if (typeof window !== 'undefined') window.S = S;
       render({animate:isFirst});
       isFirst=false;
       const lbl=$('#sync-lbl');
@@ -499,9 +500,35 @@ async function load(){
   finally{loading=false;}
 }
 
-const es=new EventSource('/api/events');
-es.onmessage=()=>load();
-es.onerror=()=>{};
+// Real-time synchronization
+API.subscribeToEvents(
+  () => load(),
+  (status) => {
+    const lbl = $('#sync-lbl');
+    if (lbl) lbl.textContent = status;
+  }
+);
 load();
 
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+// Window fallback compatibility
+if (typeof window !== 'undefined') {
+  Object.assign(window, {
+    S,
+    load,
+    render,
+    derive,
+    applyTheme,
+    applyPrivacy,
+    togglePrivacy,
+    toggleTheme,
+    toggleAccent,
+    openSheet,
+    openDrawer,
+    startTicker,
+    ACT,
+    Hld,
+  });
+}
+

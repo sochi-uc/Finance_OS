@@ -1,8 +1,9 @@
-const CACHE = 'ledger-v4';
+const CACHE = 'ledger-v5';
 const SHELL = [
   '/',
   '/manifest.webmanifest',
   '/css/style.css',
+  '/js/api.js',
   '/js/config.js',
   '/js/data.js',
   '/js/explainers.js',
