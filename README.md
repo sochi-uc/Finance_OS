@@ -16,10 +16,10 @@ A high-performance, mobile-first, zero-dependency personal wealth management and
 
 ## Architecture
 
-- **Frontend:** Single-file architecture (`web/index.html`) optimized for microsecond load times.
-- **Backend:** Node.js / Express REST API with Server-Sent Events (SSE) for live updates.
-- **Database:** SQLite (local, private, air-gapped from cloud providers).
-- **Deployment:** Fully Dockerized for isolated, secure execution.
+- **Frontend:** Zero-build modular architecture (`web/css/style.css` and ES-modularized `web/js/`: `config.js`, `data.js`, `explainers.js`, `charts.js`, `views.js`, `app.js`) loaded via lightweight semantic shell (`web/index.html`). Instant load times, offline PWA caching via Service Worker.
+- **Backend:** Node.js 22 + Fastify REST API with Server-Sent Events (SSE) for real-time live synchronization.
+- **Database:** SQLite with WAL mode (`better-sqlite3`, local, private, air-gapped from cloud providers).
+- **Deployment:** Fully Dockerized for isolated, reproducible execution.
 
 ## Getting Started
 

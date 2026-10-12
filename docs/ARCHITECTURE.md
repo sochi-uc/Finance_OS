@@ -14,10 +14,19 @@ Claude (curl / MCP / Claude Code on server) → same API, header x-actor: claude
 
 ## Layout
 ```
-server/index.js   API + SSE + doc generation
-web/index.html    Zero-build UI (glass, SVG charts, count-up, live)
-docs/             CLAUDE.md PLAN.md ARCHITECTURE.md LOGS.md STATE.md archive/
-data/             SQLite (git-ignored)
+server/index.js       API + SSE + doc generation
+web/
+  index.html          Lightweight semantic host shell
+  css/style.css       Apple HIG design tokens, glassmorphism, responsive grid
+  js/
+    config.js         Icons, tabs, formatters, and environment constants
+    data.js           Historical charts, technical analyses, tactical dossiers
+    explainers.js     Glass explainer dialog definitions and modal controller
+    charts.js         Sparklines, Terminal charts, donut and calendar engines
+    views.js          Desk view renderers (Foresight, Home, NGN, USD, Cash, Ledger)
+    app.js            State management, REST API client, SSE sync, sheet controllers
+docs/                 CLAUDE.md PLAN.md ARCHITECTURE.md LOGS.md STATE.md archive/
+data/                 SQLite (git-ignored)
 ```
 ## Why this stack
 Node 22 + Fastify (fast, tiny), better-sqlite3 (synchronous, zero-ops), SSE (simpler than WebSockets for one-way push). Upgrade path in PLAN.md Phase 2.

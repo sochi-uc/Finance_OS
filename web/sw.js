@@ -1,5 +1,15 @@
-const CACHE = 'ledger-v3';
-const SHELL = ['/', '/manifest.webmanifest'];
+const CACHE = 'ledger-v4';
+const SHELL = [
+  '/',
+  '/manifest.webmanifest',
+  '/css/style.css',
+  '/js/config.js',
+  '/js/data.js',
+  '/js/explainers.js',
+  '/js/charts.js',
+  '/js/views.js',
+  '/js/app.js'
+];
 
 self.addEventListener('install', e => {
   self.skipWaiting();
