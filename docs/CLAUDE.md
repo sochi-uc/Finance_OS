@@ -36,7 +36,8 @@ Current thesis: UCAP = "picks & shovels" on bank recapitalisation + Dangote IPO 
 Avg FX cost = `ngn_spent / usd_funded`. Display currency is always ₦; USD assets are converted at `settings.fx`.
 
 ## Standard Playbooks & Frontend Heuristics (October 2026)
-- **Autonomous Web Design (Nate Herk standard):** Read `docs/AUTONOMOUS_WEB_DESIGN.md`. Adhere to Emil Kowalski micro-typography, generous spatial rhythm, Apple/Linear physics-based easing, and Figma/Playwright MCP verification.
+- **Apple Design Standard (The Two Skills):** Read `docs/APPLE_DESIGN_STANDARD.md`. Strictly enforce Skill 1 (Design Foundations & Visual Token Engine) and Skill 2 (Fluid Motion & Physics Engine) on all UI components.
+- **Autonomous Web Design:** Read `docs/AUTONOMOUS_WEB_DESIGN.md`. Adhere to Emil Kowalski micro-typography, generous spatial rhythm, Apple/Linear physics-based easing, and Figma/Playwright MCP verification.
 - **Investment Playbook:** Read `docs/INVESTMENT_PLAYBOOK.md` for full execution protocols on:
   - NIDF Public Offer Arbitrage (Kolade Alabi)
   - Stock Numbers Decoder (Dahlia)

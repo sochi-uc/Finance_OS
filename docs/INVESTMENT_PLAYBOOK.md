@@ -5,7 +5,7 @@ Curated synthesis of the 7 strategic investment, engineering, and execution fram
 ---
 
 ## 1. NIDF Public Offer Arbitrage & Cash Flow Machine
-**Curator:** Kolade Alabi (@iam_kriyl)  
+**Curator:** Fixed-Income Arbitrage Strategy  
 **Target:** Nigeria Infrastructure Debt Fund (`NIDF`) — Nigerian Exchange (NGX)  
 **Thesis:** Zero-speculation, defensive quarterly dividend cash-flow engine with an upfront 42% discount arbitrage.
 
@@ -47,7 +47,7 @@ flowchart LR
 ---
 
 ## 3. How to Read Stock Page Numbers
-**Curator:** Dahlia (@getontopwithdahlia)  
+**Curator:** Market Fundamentals Standard  
 **Application:** Integrated into the Finance OS **Foresight** and **Naira** tabs as an interactive fundamentals decoder.
 
 * **Market Cap (`Share Price × Total Shares`):** Measures total corporate scale and liquidity tier. Large-caps (Zenith, Seplat) offer capital preservation; micro-caps carry high volatility and illiquidity risk.
@@ -59,19 +59,19 @@ flowchart LR
 ---
 
 ## 4. Scaling Income vs. Cutting Pennies
-**Curator:** Isobel Lorna (@isobellorna_)  
+**Curator:** Capital Asymmetry Framework  
 **Application:** Injected into Finance OS **Rotating Dashboard Wisdom** and **Budget Analysis**.
 
 > [!IMPORTANT]
 > **The Asymmetry Axiom:** There is a mathematical and physiological floor to how much you can cut expenses, but there is **zero ceiling** on what you can earn.
 
-* **The Diet Coke Analogy:** Spending 3 hours rationing a single beverage or researching discount codes saves ₦500 at the cost of depleted cognitive energy. Redirecting those 3 hours into high-income digital skills, closing deals, or deploying technical systems creates scalable revenue that buys whole cases effortlessly.
+* **The Diet Coke Analogy:** Spending 3 hours micro-budgeting small consumer expenses or researching discount codes saves ₦500 at the cost of depleted cognitive energy. Redirecting those 3 hours into high-income digital skills, closing deals, or deploying technical systems creates scalable revenue that buys whole cases effortlessly.
 * **Capital Role:** Frugality protects and prevents leakage; skill-based income expansion is the sole vehicle that funds significant capital investments (property, large equity tranches, seed ventures).
 
 ---
 
 ## 5. The Claude 3-Pillar Stock Risk Screener
-**Curator:** Ruby Ihekweme (@rubydeeglobal)  
+**Curator:** Institutional Corporate Due Diligence  
 **Application:** Built as a corporate screening card in Finance OS before allocating capital to new NGX tickers.
 
 ```
@@ -96,7 +96,7 @@ flowchart LR
 ---
 
 ## 6. 9 NGX Stocks with 100%+ Returns in 2026
-**Curator:** Engr. Achie (@blvck_av)  
+**Curator:** Quantitative Breakout Mechanics  
 **Application:** Documented multi-bagger case studies on the Nigerian Exchange, live in Finance OS.
 
 | Ticker | Company | Entry Timing / Basis | Peak Performance | Core Catalyst |
@@ -114,7 +114,7 @@ flowchart LR
 ---
 
 ## 7. Technical Chart Breakouts & Price Level Matrix
-**Curator:** Engr. Achie (@blvck_av)  
+**Curator:** Quantitative Breakout Mechanics  
 **Application:** Live Technical Breakout Scanner across all 11 monitored NGX assets in Finance OS.
 
 ### The 3-Step Breakout Protocol

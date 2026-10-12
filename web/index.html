@@ -188,6 +188,79 @@ input,textarea,select{font:inherit}
 .c6 {grid-column:span 6}
 .c3 {grid-column:span 3}
 
+
+/* ─── APPLE STANDARD DESIGN TOKENS (SKILL 1: VISUAL FOUNDATIONS) ─── */
+:root {
+  --f: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", sans-serif;
+  --apple-glass-dark: rgba(18, 18, 22, 0.72);
+  --apple-border-dark: rgba(255, 255, 255, 0.08);
+  --apple-shadow-ambient: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --apple-shadow-elevation: 0 12px 32px rgba(0, 0, 0, 0.35);
+  --apple-curve: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card {
+  background: var(--apple-glass-dark) !important;
+  backdrop-filter: blur(28px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+  border: 1px solid var(--apple-border-dark) !important;
+  border-radius: 16px !important;
+  box-shadow: var(--apple-shadow-ambient), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+  transition: transform 0.24s var(--apple-curve), box-shadow 0.24s var(--apple-curve), border-color 0.2s ease !important;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow: var(--apple-shadow-elevation), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+}
+
+/* SKILL 2: FLUID MOTION & PHYSICS ENGINE */
+.btn, button, [data-act] {
+  transition: transform 0.14s var(--apple-curve), filter 0.14s var(--apple-curve), background-color 0.14s var(--apple-curve) !important;
+}
+
+.btn:active, button:active, [data-act]:active {
+  transform: scale(0.965) !important;
+}
+
+.btn-primary {
+  background: var(--c-accent) !important;
+  border: none !important;
+  box-shadow: 0 2px 10px rgba(10, 132, 255, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+  border-radius: 10px !important;
+}
+.btn-primary:hover {
+  filter: brightness(1.08) !important;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: var(--c-ink) !important;
+  border-radius: 10px !important;
+}
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.drw-panel {
+  background: rgba(14, 14, 18, 0.86) !important;
+  backdrop-filter: blur(32px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(190%) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.5) !important;
+  transition: transform 0.36s var(--apple-curve) !important;
+}
+
+.drw-scrim {
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
 /* ─── CARD ─────────────────────────────────────────────── */
 
 .card {
@@ -728,13 +801,13 @@ const IC = {
 
 const QUOTES = [
   { text: "The stock market is a device for transferring money from the impatient to the patient.", author: "Warren Buffett" },
-  { text: "There is a hard ceiling on how much you can cut costs, but zero ceiling on what you can earn. Build high-leverage skills instead of saving pennies.", author: "Isobel Lorna" },
-  { text: "Wealth is what you don't see. It's the cars not purchased, the diamonds not bought.", author: "Morgan Housel" },
-  { text: "NIDF locks in a 42% upfront discount and 15.5% quarterly yield. Predictable cash flow beats speculative hype every single time.", author: "Kolade Alabi" },
+  { text: "Expense reduction has a mathematical zero-bound, while capital generation has infinite upside. Focus on high-leverage systems and skill acquisition.", author: "Capital Allocation Axiom" },
+  { text: "Wealth is what you don't see. It's the investments compounding quietly in the background.", author: "Morgan Housel" },
+  { text: "Infrastructure debt funds lock in predictable quarterly cash flows, eliminating the cognitive drag of speculative market timing.", author: "Fixed-Income Principle" },
   { text: "Compound interest is the eighth wonder of the world. He who understands it, earns it.", author: "Albert Einstein" },
   { text: "Do not save what is left after spending, but spend what is left after saving.", author: "Warren Buffett" },
-  { text: "Never chase breakouts on dry volume. Wait for the institutional volume spike to confirm the smart money has stepped in.", author: "Engr. Achie" },
-  { text: "Risk is what's left over after you've thought of everything.", author: "Carl Richards" }
+  { text: "Never chase breakouts on thin liquidity. Institutional volume confirmation is required before capital commitment.", author: "Market Mechanics" },
+  { text: "Risk is what remains after you have accounted for every predictable variable.", author: "Portfolio Theory" }
 ];
 let quoteIdx = 0;
 let quoteTimer = null;
@@ -1425,7 +1498,7 @@ foresight(d) {
     <div class="card c12">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
         <div>
-          <div class="card-label" style="color:var(--c-accent)">Live Market Watchlist · Engr. Achie Setup</div>
+          <div class="card-label" style="color:var(--c-accent)">Institutional Breakout Watchlist · 2026 Alpha Setups</div>
           <div style="font-size:16px; font-weight:700;">2026 Outperformers & Monitored NGX Assets</div>
         </div>
         <span style="font-size:12px; color:var(--c-ink3);">Tap any asset to load into the Pro Terminal ↗</span>
@@ -1481,7 +1554,7 @@ foresight(d) {
     
     <!-- CARD A: NIDF ARBITRAGE -->
     <div class="card c6" style="border-left: 3px solid var(--c-gain);">
-      <div class="card-label" style="color:var(--c-gain)">Cash Flow & Dividend Arbitrage · Kolade Alabi</div>
+      <div class="card-label" style="color:var(--c-gain)">Yield & Liquidity Arbitrage · Fixed-Income Infrastructure</div>
       <div style="font-size:16px; font-weight:700; margin-bottom:6px;">NIDF Public Offer: 42% Upfront Discount</div>
       
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0;">
@@ -1524,7 +1597,7 @@ foresight(d) {
 
     <!-- CARD C: 3-PILLAR RISK SCREENER -->
     <div class="card c6">
-      <div class="card-label" style="color:var(--c-accent)">Due Diligence · Ruby Ihekweme (@rubydeeglobal)</div>
+      <div class="card-label" style="color:var(--c-accent)">Corporate Risk Due Diligence · 3-Pillar Audit</div>
       <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Claude 3-Pillar Corporate Risk Screener</div>
       <div style="font-size:12px; color:var(--c-ink2); line-height:1.5; background:var(--c-s2); padding:10px 12px; border-radius:8px; border:1px solid var(--c-border);">
         <p><b>1. Earnings & Margins:</b> 3–5 yr revenue CAGR, stable gross and net margins through Nigerian inflation cycles.</p>
@@ -1535,7 +1608,7 @@ foresight(d) {
 
     <!-- CARD D: FOUNDATIONS & MINDSET -->
     <div class="card c6">
-      <div class="card-label">Mindset & Foundations · Dahlia & Isobel Lorna</div>
+      <div class="card-label">Capital Expansion Principles & Valuation Metrics</div>
       <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Stock Metrics & Income Asymmetry</div>
       <div style="font-size:12px; color:var(--c-ink2); line-height:1.5; background:var(--c-s2); padding:10px 12px; border-radius:8px; border:1px solid var(--c-border);">
         <p><b>The Asymmetry Axiom:</b> Frugality has an absolute mathematical floor, but skill-based earning has <b>zero ceiling</b>. Stop spending hours rationing Diet Cokes; spend hours acquiring high-leverage skills that buy assets.</p>
@@ -2033,7 +2106,7 @@ const ACT={
       </div>
 
       <div class="drw-section">
-        <div class="drw-section-title">Technical Chart Setup (Engr. Achie Framework)</div>
+        <div class="drw-section-title">Technical Chart Architecture & Momentum Stack</div>
         <div style="margin-bottom:10px;">
           <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--c-ink3); margin-bottom:4px;">
             <span>Support Floor: <b>${fmtN(c.support)}</b></span>
