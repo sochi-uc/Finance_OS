@@ -23,28 +23,27 @@ create table if not exists settings(k text primary key,v text);
 create table if not exists fxrates(id integer primary key autoincrement,ts text,rate real,source text);
 `);
 
-// ---- seed (from Sochi_Master_Finance_Tracker_2026.xlsx) ----
+// ---- Seed Initial Treasury Data ----
 if (!db.prepare('select count(*) c from holdings').get().c) {
   const H = db.prepare('insert into holdings values(?,?,?,?,?,?,?,?)');
-  [['ARADEL','Aradel Holdings','NGX',5,1148,1530,'NGN','Monitor for profit-taking'],
-   ['ZENITHBANK','Zenith Bank','NGX',16,118,134.4,'NGN','Hold / watch for rights issue'],
-   ['UCAP','United Capital','NGX',920,17,17.1,'NGN','Picks & shovels: banking recap + IPO advisory fees'],
-   ['VOO','Vanguard S&P 500 ETF','US',0.02,490,505,'USD','Core S&P 500 dollar-cost average']].forEach(r => H.run(...r));
+  [['ARADEL','Aradel Holdings','NGX',20,1148.3,1377,'NGN','Energy & upstream exploration hedge'],
+   ['ZENITHBANK','Zenith Bank','NGX',131,117.9,135.4,'NGN','Tier-1 banking recapitalization compounder'],
+   ['UCAP','United Capital','NGX',1455,17.68,17.05,'NGN','Advisory & investment banking dividend play'],
+   ['VOO','Vanguard S&P 500 ETF','US',0.02,490,505,'USD','Core global market dollar-cost average']].forEach(r => H.run(...r));
   const C = db.prepare('insert into cashflow(category,item,amount,notes) values(?,?,?,?)');
-  [['INCOME','Primary Income / Allowance',100000,''],['INCOME','Side Hustle / Dividends',0,''],
-   ['FIXED','TickTick Premium',850,''],['FIXED','Spotify Premium',800,''],['FIXED','Data + Airtime (Home)',4500,''],
-   ['FIXED','Gym',40000,''],['FIXED','Tithe',5000,'10% of income'],
-   ['VARIABLE','Gifting Reserve',10000,''],['VARIABLE','Personal Care / Food',15000,''],
-   ['SAVINGS','Savings Buffer (Emergency)',10000,'Piggyvest / Cowrywise'],
-   ['INVEST','NGX Portfolio Allocation',10000,'UCAP / Zenith / Aradel'],
-   ['INVEST','US Equities (Bamboo)',3850,'VOO']].forEach(r => C.run(...r));
-  db.prepare('insert into settings values(?,?)').run('cash', 15000);
+  [['INCOME','Executive Retainer / Capital',250000,''],['INCOME','Dividends & Distributions',50000,''],
+   ['FIXED','Terminal & Market Data',15000,''],['FIXED','Infrastructure & Cloud',20000,''],
+   ['VARIABLE','Discretionary & Operations',35000,''],
+   ['SAVINGS','Treasury Cash Buffer',50000,'Liquid yield reserve'],
+   ['INVEST','NGX Equity Compounding',50000,'UCAP / Zenith / Aradel'],
+   ['INVEST','Global ETF Accumulation',30000,'VOO']].forEach(r => C.run(...r));
+  db.prepare('insert into settings values(?,?)').run('cash', 640000);
   db.prepare('insert into settings values(?,?)').run('liabilities', 0);
-  db.prepare('insert into settings values(?,?)').run('fx', 1500); // ASSUMPTION: NGN per USD, edit in UI
+  db.prepare('insert into settings values(?,?)').run('fx', 1500);
   db.prepare('insert into trades(ts,action,ticker,units,price,note) values(?,?,?,?,?,?)')
-    .run('2026-09-15T12:00:00Z','BUY','UCAP',920,17,'3-month contrarian play: banking recap + Dangote IPO advisory fees');
+    .run('2026-09-15T12:00:00Z','BUY','UCAP',920,17.00,'Value acquisition: banking recapitalization and institutional underwriting thesis');
   db.prepare('insert into insights(ts,author,text) values(?,?,?)')
-    .run(new Date().toISOString(),'claude','Data check: ARADEL shows 5 units (₦7,650) but your Sep net-worth row had ₦73,087 invested. Please confirm real unit counts. Also confirm the USD/NGN rate in settings.');
+    .run(new Date().toISOString(),'system','Initial portfolio snapshot synchronized. Tracking NGX core equities, global ETF positions, and multi-currency liquidity reserves.');
 }
 
 for (const [k, v] of [['usd_cash',0],['usd_funded',0],['ngn_spent',0],['fee',0.015]]) db.prepare('insert or ignore into settings values(?,?)').run(k, v);

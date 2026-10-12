@@ -24,8 +24,8 @@ Curated synthesis of the 7 strategic investment, engineering, and execution fram
 
 ---
 
-## 2. Autonomous Web Design with Claude
-**Curator:** Nate Herk (@nateherkai)  
+## 2. Autonomous Interface Engineering
+**Curator:** Modern Design Engineering Heuristics  
 **Application:** Embedded into `docs/AUTONOMOUS_WEB_DESIGN.md` as the permanent frontend engineering standard for Finance OS.
 
 ```mermaid

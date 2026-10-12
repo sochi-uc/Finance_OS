@@ -1,7 +1,7 @@
 services:
   finance:
     build: .
-    container_name: sochi-finance-os
+    container_name: finance-os
     restart: always
     ports: ["8787:8787"]
     env_file: .env

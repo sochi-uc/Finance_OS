@@ -1,6 +1,6 @@
 # Apple Design Standard: The Two Skills
 **Framework:** Apple Human Interface Guidelines (HIG) & Fluid Interface Model  
-**Standardized for:** Sochi Finance OS & Enterprise Agentic Engineering
+**Standardized for:** Finance OS & Enterprise Financial Engineering
 
 ---
 

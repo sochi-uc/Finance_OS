@@ -175,6 +175,6 @@ const ANALYSES = {
     <div><b>Volume Trigger:</b> Volume dried up on the pullback; buyers defending ₦1,250</div>
     <div><b>Breakout Target:</b> Re-test of ₦1,530 targets ₦1,850 – ₦2,000</div>
   </div>`,
-  NOBEL: `<b>Ajo / ROSCA Capital Scheme:</b> ₦216,840 pooled with participants. Expected payout: ~₦390k–₦500k between Oct 2026 – Feb 2027. Strictly earmarked to fund iPad screen repair (₦300k) without touching stock portfolio or seed capital.`,
-  P1MILLION: `<b>Venture Capital Seed:</b> ₦400,000 active campus business capital (adjusted for ₦100k school necessities). Returns strictly funneled into NGX compounders (UCAP, Aradel).`,
+  NOBEL: `<b>Fixed-Income Liquidity Tranche:</b> ₦216,840 allocated in structured capital pooling. Expected maturity payout: ~₦390,000 – ₦500,000 (Oct 2026 – Feb 2027) yielding capital expansion to buffer cash reserves without liquidating public equities.`,
+  P1MILLION: `<b>Private Venture Capital Allocation:</b> ₦400,000 active working seed capital in private enterprise. Cash distributions and dividend yield systematically funneled into NGX compounding equities (UCAP, Aradel).`,
 };

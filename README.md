@@ -4,7 +4,7 @@ A high-performance, mobile-first, zero-dependency personal wealth management and
 
 ## Core Features
 
-- **Holistic Wealth Tracking:** Real-time visibility into NGX Stocks, Private Equity (VC/Ajo), and USD holdings.
+- **Holistic Wealth Tracking:** Real-time visibility into NGX Equities, Private Equity & Alternative Assets, and Global Multi-Currency Positions.
 - **AI Foresight Engine:** Embedded strategic insights and actionable investment roadmaps mapped directly to financial data.
 - **Journal & Ledger:** Real-time note-taking and trade rationalization synced instantly to the backend.
 - **Zero-Friction UI:** 

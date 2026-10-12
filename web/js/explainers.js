@@ -11,30 +11,30 @@ const EXPLAINERS = {
     tag: 'Portfolio Intelligence',
     title: 'Total Net Worth & Capital Base',
     overview: 'The consolidated economic value of all liquid bank cash, publicly quoted Nigerian equities, private venture holdings, and foreign currency balances minus any outstanding liabilities. Serves as your master institutional compass for wealth accumulation.',
-    formula: '<code>Net Worth = (Access Bank + UBA + Bamboo USD × NGN/USD FX) + (NGX Equities + Private Ventures + US Stocks) - Liabilities</code>. Mark-to-market valuations update dynamically.',
+    formula: '<code>Net Worth = (Primary Banking + Operational Reserves + Foreign USD × FX) + (NGX Equities + Private Ventures + Global Equities) - Liabilities</code>. Mark-to-market valuations update dynamically.',
     playbook: 'Evaluate month-over-month capital trajectory rather than daily market swings. In inflationary environments like Nigeria, your strategic priority is steadily growing the ratio of productive assets (equities and cash-flowing ventures) relative to depreciating cash.',
     benchmarks: 'Target baseline: ₦5,000,000+ total capital base by late 2027. Maintain compound return on invested capital above the domestic headline inflation rate.'
   },
   liquid_cash: {
     tag: 'Treasury Management',
     title: 'Liquid Cash & Operational Reserves',
-    overview: 'Instantly accessible cash held across Tier-1 Nigerian commercial banks and your digital dollar wallet. Engineered to guarantee psychological freedom, absorb campus emergency overhead, eliminate forced asset liquidation during market corrections, and maintain "Sniper Ammo" for market dips.',
-    formula: '<code>Liquid Cash = Access Bank (Primary Operating) + UBA (Campus Reserve) + Bamboo USD (Marked to NGN at parallel rate)</code>.',
-    playbook: 'Maintain at least 3 to 6 months of basic campus living expenses (minimum ₦200,000–₦300,000) permanently uncommitted. Any liquid surplus beyond this threshold constitutes tactical dry powder deployed into high-conviction DCA purchases.',
-    benchmarks: 'Current verified reserves: ₦640,000 across UBA and Access. Strict discipline: never use operating cash for speculative bets.'
+    overview: 'Instantly accessible cash held across Tier-1 commercial banks and your digital hard-currency wallet. Engineered to guarantee psychological freedom, absorb operational overhead, eliminate forced asset liquidation during market corrections, and maintain tactical dry powder for market dips.',
+    formula: '<code>Liquid Cash = Primary Operating Account + Secondary Reserves + Dollar Wallet (Marked to NGN at prevailing FX)</code>.',
+    playbook: 'Maintain at least 3 to 6 months of baseline living and operational expenses permanently uncommitted. Any liquid surplus beyond this threshold constitutes tactical dry powder deployed into high-conviction DCA purchases.',
+    benchmarks: 'Maintain segregated liquid operating buffers. Strict discipline: never deploy essential liquidity reserves into speculative bets.'
   },
   allocation: {
     tag: 'Portfolio Construction',
     title: 'Strategic Asset Allocation Matrix',
-    overview: 'The proportional distribution of total wealth across Nigerian Public Equities, Private Ventures & Ajo, US Dollar Assets, and Liquid Bank Reserves. Asset allocation drives over 90% of long-term risk-adjusted portfolio returns.',
+    overview: 'The proportional distribution of total wealth across Nigerian Public Equities, Private Equity & Debt, US Dollar Assets, and Liquid Bank Reserves. Asset allocation drives over 90% of long-term risk-adjusted portfolio returns.',
     formula: 'Calculated as each individual asset class valuation divided by total gross asset pool.',
-    playbook: 'Target institutional allocation target bands: <b>45% NGX Core Equities</b> (domestic inflation hedge & high dividend yield), <b>25% US Equities / Dollar Cash</b> (structural currency protection), <b>20% Liquid Bank Cash</b> (stability & dip-buying liquidity), and <b>10% Private Ventures / Ajo</b> (campus cash flow).',
+    playbook: 'Target institutional allocation target bands: <b>45% NGX Core Equities</b> (domestic inflation hedge & high dividend yield), <b>25% US Equities / Dollar Cash</b> (structural currency protection), <b>20% Liquid Bank Cash</b> (stability & tactical dry powder), and <b>10% Private Equity & Debt</b> (alternative cash-flow yield).',
     benchmarks: 'Perform a portfolio rebalancing audit semi-annually or whenever any asset bucket drifts more than 10% outside its target weighting.'
   },
   surplus: {
     tag: 'Cash Flow Engine',
     title: 'Monthly Investable Cash Surplus',
-    overview: 'The net free cash flow generated each month after meeting all campus living expenses, fixed overhead, and mandatory contributions. Surplus is the lifeblood and primary funding engine of your investment portfolio.',
+    overview: 'The net free cash flow generated each month after meeting all baseline living expenses, fixed overhead, and mandatory operational costs. Surplus is the lifeblood and primary funding engine of your investment portfolio.',
     formula: '<code>Monthly Surplus = Total Inflows - (Fixed Overhead + Variable Expenses + Savings Reserves)</code>.',
     playbook: 'A durable surplus allows you to automate a monthly ₦20,000 Dollar-Cost Averaging (DCA) program into Tier-1 equities without relying on unpredictable trading gains or market timing.',
     benchmarks: 'Maintain a minimum positive monthly surplus. Allocate at least ₦20,000 to automated monthly equity DCA, banking any excess as opportunistic sniper reserves.'
@@ -92,7 +92,7 @@ const EXPLAINERS = {
     title: 'The Asymmetry Axiom & Capital Principle',
     overview: 'The governing mathematical truth of wealth accumulation: expense reduction has a strict lower bound of zero, whereas income growth and capital compounding possess unbounded upside.',
     formula: '<code>Max Savings = Income - 0 (Hard mathematical limit)<br>Max Earnings = Infinity (Unbounded upside through leverage and compounding assets)</code>',
-    playbook: 'Stop expending cognitive energy rationing trivial campus expenses. Focus 100% of executive bandwidth on mastering high-leverage engineering skills and building systems that scale income to acquire compounding assets.',
+    playbook: 'Stop expending cognitive energy micro-managing trivial consumer expenses. Focus 100% of executive bandwidth on mastering high-leverage technical systems and high-income skills that scale revenue to acquire compounding assets.',
     benchmarks: 'Operating Rule: If a moderate expense preserves time or mental focus for high-leverage engineering and investment analysis, prioritize output over extreme frugality.'
   },
   bamboo_usd: {
@@ -105,11 +105,11 @@ const EXPLAINERS = {
   },
   private_ventures: {
     tag: 'Direct Investments',
-    title: 'Private Ventures & Nobel Ajo',
-    overview: 'Illiquid investments in on-campus business ventures and structured communal savings circles (Ajo).',
-    formula: 'Carried at deployed capital cost or net tangible asset value. Cash payouts are recorded as direct portfolio cash flow.',
+    title: 'Private Equity & Structured Capital',
+    overview: 'Illiquid holdings in private operating ventures and structured capital pooling instruments.',
+    formula: 'Carried at deployed capital cost or net tangible asset value. Cash distributions are recorded as direct portfolio cash flow.',
     playbook: '1. <b>Capital Segregation:</b> Never co-mingle venture operating funds with personal living money.<br>2. <b>Reinvestment Rule:</b> Funnel 100% of distributed net profits straight into liquid NGX dividend assets or Bamboo USD.<br>3. <b>Illiquidity Hurdle:</b> Demand a 30%+ annual hurdle rate to compensate for lack of secondary market liquidity.',
-    benchmarks: 'Every campus venture must demonstrate positive operating cash flow within 90 days of seed funding.'
+    benchmarks: 'Every private commercial venture must demonstrate positive operating cash flow within 90 days of seed funding.'
   },
   dividend_calendar: {
     tag: 'Passive Cash Flow',
@@ -138,7 +138,7 @@ const EXPLAINERS = {
   strategy_blueprint: {
     tag: 'Macro Blueprint',
     title: '2027 Capitalization Blueprint & Directives',
-    overview: 'Long-term strategic roadmap governing asset accumulation, banking recapitalization plays, energy sector positioning, and campus venture reinvestment.',
+    overview: 'Long-term strategic roadmap governing asset accumulation, banking recapitalization plays, energy sector positioning, and enterprise venture reinvestment.',
     formula: 'Synthesizes Nigerian macroeconomic structural shifts into actionable portfolio directives.',
     playbook: 'Hold through the recapitalization cycle, compound dividend yields, avoid listing hype, and reinvest venture profits into productive capital.',
     benchmarks: 'Target financial independence through passive dividend and enterprise cash flow matching or exceeding monthly baseline expenses.'

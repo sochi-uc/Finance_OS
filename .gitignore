@@ -12,6 +12,14 @@ data/
 *.sqlite
 *.sqlite3
 
+# Financial spreadsheets & local raw data
+*.xlsx
+*.xls
+*.csv
+docs/archive/
+docs/STATE.md
+docs/LOGS.md
+
 # Logs
 *.log
 npm-debug.log*

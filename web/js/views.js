@@ -172,7 +172,7 @@ foresight(d) {
 home(d) {
   const bk=[
     {l:'NGX Stocks',   v:d.ngxV,         c:PALETTE[0]},
-    {l:'Private & Ajo',v:d.privV,         c:PALETTE[1]},
+    {l:'Private Equity',v:d.privV,        c:PALETTE[1]},
     {l:'Dollar',       v:d.usV+d.wNGN,    c:PALETTE[2]},
     {l:'Banks',        v:d.uba+d.acc,     c:PALETTE[3]},
   ].filter(b=>b.v>0);
@@ -195,7 +195,7 @@ home(d) {
 
   <div class="ph">
     <div class="ph-left">
-      <div class="ph-title">${greet}, Sochi.</div>
+      <div class="ph-title">${greet}, Executive.</div>
       <div class="ph-sub">₦${fx().toLocaleString()} / $1 &nbsp;·&nbsp; ${new Date().toLocaleDateString([],{weekday:'long',month:'long',day:'numeric'})}</div>
     </div>
   </div>
@@ -242,7 +242,7 @@ home(d) {
         <div class="kpi-val">${N(d.ngxV)}</div>
       </div>
       <div class="kpi">
-        <div class="meta2" style="font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:10px">Private & Ajo</div>
+        <div class="meta2" style="font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:10px">Private Equity</div>
         <div class="kpi-val">${N(d.privV)}</div>
       </div>
       <div class="kpi">
@@ -318,7 +318,7 @@ ngn(d) {
       ${d.ngx.map(hrow).join('')||'<p style="color:var(--c-ink3);font-size:13px">No NGX holdings.</p>'}
     </div>
     <div class="card c6">
-      <div class="card-label">Private Ventures & Ajo <span class="badge b-neu" style="vertical-align:middle;margin-left:4px">Illiquid</span> ${infoBtn('private_ventures', 'Private Ventures & Ajo')}</div>
+      <div class="card-label">Private Equity & Debt <span class="badge b-neu" style="vertical-align:middle;margin-left:4px">Illiquid</span> ${infoBtn('private_ventures', 'Private Equity & Debt')}</div>
       <div class="meta2" style="margin-bottom:10px">Total: <strong style="color:var(--c-ink)">${fmtN(d.privV)}</strong></div>
       ${d.priv.map(hrow).join('')||'<p style="color:var(--c-ink3);font-size:13px">No private ventures.</p>'}
     </div>
@@ -429,7 +429,7 @@ log() {
   const strats=[
     {title:'NGX Banking Recap Climax (Q1/Q2 2027)',body:'Tier-1 banks will deploy fresh recapitalised capital, supercharging earnings. UCAP earns advisory and underwriting fees on every deal. Hold through the recap cycle.'},
     {title:'Dangote IPO Aftermath & Energy Play',body:'The IPO pulls massive retail liquidity into NGX. Use ARADEL as a stable, already-listed energy anchor. Never buy at listing hype — wait for the first post-IPO correction.'},
-    {title:'P1 Million Venture Capital',body:'₦500k seed deployed on-campus. Every naira of net profit must be routed into NGX / Bamboo to compound. Hard rule: never co-mingle business capital with personal expenses.'},
+    {title:'Commercial Venture Capital',body:'₦400k seed deployed in operational commercial enterprise. Every naira of net profit must be routed into NGX / US assets to compound. Hard rule: never co-mingle business capital with personal expenses.'},
     {title:'US Market Re-Entry via Bamboo',body:'Currently $0 equity exposure. Build Bamboo wallet steadily. Target VOO on a verifiable S&P 500 correction or when NGN/USD reaches a favourable rate in early 2027.'},
   ];
   return `

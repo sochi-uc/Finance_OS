@@ -1,6 +1,6 @@
-# Autonomous Web Design with Claude & AI Assistants
-**Framework Source:** Nate Herk (@nateherkai)  
-**Standardized for:** Sochi Finance OS & Future Frontends
+# Autonomous Interface Engineering Standard
+**Framework Benchmark:** Apple HIG, Linear & Stripe Design Engineering  
+**Standardized for:** Finance OS Architecture
 
 ---
 

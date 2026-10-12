@@ -88,7 +88,7 @@ function render(opts={}) {
     <div class="brand">
       <div class="brand-logo">${IC.gem}</div>
       <div class="brand-text">
-        <div class="brand-title">Sochi</div>
+        <div class="brand-title">Finance OS</div>
         <div class="brand-sub">Private Ledger</div>
       </div>
     </div>
@@ -115,7 +115,7 @@ function render(opts={}) {
     <div class="mobile-top-bar" id="mobile-top-bar">
       <div class="mobile-brand">
         <span class="brand-logo" style="width:24px;height:24px;">${IC.gem}</span>
-        <span>Sochi</span>
+        <span>Finance OS</span>
       </div>
       <div class="mobile-ctrls">
         <div class="live-badge"><span class="live-dot"></span>Live</div>
