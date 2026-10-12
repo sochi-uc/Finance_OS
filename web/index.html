@@ -1250,10 +1250,15 @@ const V = {
 
 foresight(d) {
   return `
-  <div class="ph"><div class="ph-left">
-    <div class="ph-title">Strategic Intelligence & Playbook</div>
-    <div class="ph-sub">Executive market dossier · arbitrage setups, multi-bagger benchmarks & 3-pillar execution.</div>
-  </div></div>
+  <div class="ph" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px;">
+    <div class="ph-left">
+      <div class="ph-title">Strategic Intelligence & Playbook</div>
+      <div class="ph-sub">Executive market dossier · arbitrage setups, multi-bagger benchmarks & 3-pillar execution.</div>
+    </div>
+    <a href="/presentation.html" target="_blank" class="btn btn-secondary" style="font-size:11px; padding:6px 14px; gap:6px; text-decoration:none; display:inline-flex; align-items:center; border-radius:8px;">
+      Executive Deck ↗
+    </a>
+  </div>
 
   <!-- EXECUTIVE KPI RIBBON -->
   <div class="grid" style="margin-bottom:16px;">

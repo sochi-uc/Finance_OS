@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sochi Capital · Executive Market Presentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #070709;
+  --surface: #101014;
+  --border: #202026;
+  --text: #ffffff;
+  --text-muted: #8e8e96;
+  --accent: #0a84ff;
+  --gain: #30d158;
+  --loss: #ff453a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+.header {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(16,16,20,0.85);
+  backdrop-filter: blur(16px);
+  z-index: 10;
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; letter-spacing: -0.02em; }
+.brand-badge { background: var(--accent); color: #fff; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 99px; }
+.deck-controls { display: flex; align-items: center; gap: 12px; }
+.btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.btn:hover { background: #1c1c24; border-color: #30303a; transform: translateY(-1px); }
+.slide-container {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+.slide {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(40px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+}
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+.slide-num { font-size: 12px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+.slide-title { font-size: 36px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.15; margin-bottom: 12px; }
+.slide-desc { font-size: 16px; color: var(--text-muted); max-width: 800px; line-height: 1.6; margin-bottom: 28px; }
+
+.grid { display: grid; gap: 16px; }
+.g4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.g3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.g2 { grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+}
+.metric-title { font-size: 11px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; letter-spacing: 0.05em; }
+.metric-val { font-size: 28px; font-weight: 800; margin: 4px 0; letter-spacing: -0.03em; }
+.metric-sub { font-size: 12px; color: var(--text-muted); }
+
+.table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+.table th { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--text-muted); font-weight: 600; text-transform: uppercase; font-size: 11px; }
+.table td { padding: 12px; border-bottom: 1px solid #181820; }
+
+.nav-bar {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-top: 1px solid var(--border);
+  background: rgba(16,16,20,0.9);
+}
+.progress-dots { display: flex; gap: 8px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: #282830; cursor: pointer; transition: all 0.2s; }
+.dot.active { background: var(--accent); width: 24px; border-radius: 99px; }
+
+@media (max-width: 768px) {
+  .slide { padding: 24px 20px; justify-content: flex-start; }
+  .slide-title { font-size: 26px; }
+  .slide-desc { font-size: 14px; margin-bottom: 18px; }
+  .g2, .g3, .g4 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">
+    <span>Sochi Capital</span>
+    <span class="brand-badge">EXECUTIVE BRIEF</span>
+  </div>
+  <div class="deck-controls">
+    <a href="/" class="btn">Back to Dashboard ↗</a>
+  </div>
+</div>
+
+<div class="slide-container">
+
+  <!-- SLIDE 1: INTRO -->
+  <div class="slide active" id="s0">
+    <div class="slide-num">Executive Overview</div>
+    <div class="slide-title">2026–2027 NGX Capitalization & Asymmetric Playbook</div>
+    <div class="slide-desc">High-conviction market frameworks, public offer arbitrage, and documented institutional breakout setups.</div>
+    <div class="grid g4">
+      <div class="card" style="border-left: 3px solid var(--gain);">
+        <div class="metric-title">NIDF Yield Arbitrage</div>
+        <div class="metric-val" style="color:var(--gain);">16.0% Net</div>
+        <div class="metric-sub">42% discount via public offer (closes late Oct)</div>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--accent);">
+        <div class="metric-title">Multi-Bagger Benchmark</div>
+        <div class="metric-val" style="color:var(--accent);">+170% Peak</div>
+        <div class="metric-sub">ARADEL & UPDC 2026 documented runs</div>
+      </div>
+      <div class="card" style="border-left: 3px solid #ff9f0a;">
+        <div class="metric-title">Recap Capital Fortress</div>
+        <div class="metric-val" style="color:#ff9f0a;">₦614.7bn</div>
+        <div class="metric-sub">Zenith Bank capital base guarantees lending power</div>
+      </div>
+      <div class="card" style="border-left: 3px solid #64d2ff;">
+        <div class="metric-title">Catalyst Horizon</div>
+        <div class="metric-val">Q1 2027</div>
+        <div class="metric-sub">Dangote IPO trading launch & recap liquidity wave</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: NIDF ARBITRAGE -->
+  <div class="slide" id="s1">
+    <div class="slide-num">Arbitrage Dossier · Kolade Alabi</div>
+    <div class="slide-title">Nigeria Infrastructure Debt Fund (NIDF) Public Offer</div>
+    <div class="slide-desc">Locking in an immediate 42% upfront discount and a predictable quarterly dividend cash flow engine.</div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="metric-title">Public Offer Price</div>
+        <div class="metric-val" style="color:var(--gain);">₦113.40</div>
+        <div class="metric-sub">100,000 units = ₦11.34m · Closes late October</div>
+      </div>
+      <div class="card">
+        <div class="metric-title">Secondary Market Price</div>
+        <div class="metric-val">₦162.00</div>
+        <div class="metric-sub">Bamboo / Chaka price · 100k units = ₦16.20m</div>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--gain);">
+        <div class="metric-title">Instant Arbitrage Spread</div>
+        <div class="metric-val" style="color:var(--gain);">+₦4.86M</div>
+        <div class="metric-sub">42% instant discount on capital deployment</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px;">
+      <div style="font-size:14px; line-height:1.6; color:var(--text-muted);">
+        <b style="color:#fff;">Dividend Payback Math:</b> Pays ~₦4.40/unit quarterly (~₦17.60/yr). Generates <b>₦1.58M to ₦1.76M annual cash flow</b> on 100k units. Yields <b>15.5%–16.0%</b> against offer price. Full 100% cost recovery in <b>6 to 7 years</b> purely via dividends while retaining critical infrastructure assets.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: MULTI-BAGGERS -->
+  <div class="slide" id="s2">
+    <div class="slide-num">Historical Multi-Baggers · Engr. Achie</div>
+    <div class="slide-title">9 NGX Stocks with 100%+ Returns in 2026</div>
+    <div class="slide-desc">Empirical proof of asymmetric returns originating from late-December liquidity troughs and fundamental re-rates.</div>
+    <div class="card" style="padding:10px 16px;">
+      <table class="table">
+        <thead>
+          <tr><th>Ticker</th><th>Company</th><th>Entry Window</th><th>Return Peak</th><th>Core Driver</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>SEPLAT</b></td><td>Seplat Energy</td><td>Dec 2025</td><td style="color:var(--gain); font-weight:700;">+134%</td><td>MPNU asset acquisition closing</td></tr>
+          <tr><td><b>UPDC</b></td><td>UPDC REIT / PLC</td><td>Sub-1 Year</td><td style="color:var(--gain); font-weight:700;">+170%</td><td>Real estate NAV discount closure</td></tr>
+          <tr><td><b>BUAFOODS</b></td><td>BUA Foods PLC</td><td>Q1 2026</td><td style="color:var(--gain); font-weight:700;">+120%</td><td>Staple volume & pricing power</td></tr>
+          <tr><td><b>JBERGER</b></td><td>Julius Berger</td><td>Early 2026</td><td style="color:var(--gain); font-weight:700;">+108%</td><td>FX-indexed construction backlog</td></tr>
+          <tr><td><b>ARADEL</b></td><td>Aradel Holdings</td><td>₦500 – ₦700</td><td style="color:var(--gain); font-weight:700;">+170% Peak</td><td>ND Western + Shell SPDC (136k boepd)</td></tr>
+          <tr><td><b>NGXGROUP</b></td><td>NGX Group</td><td>₦61 (Dec 2025)</td><td style="color:var(--gain); font-weight:700;">+120%</td><td>Exchange turnover & IPO pipeline</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: TECHNICAL BREAKOUTS -->
+  <div class="slide" id="s3">
+    <div class="slide-num">Execution Timing · Engr. Achie</div>
+    <div class="slide-title">Technical Chart Breakouts on the NGX</div>
+    <div class="slide-desc">The 3-step institutional footprint checklist to time entries before retail FOMO.</div>
+    <div class="grid g3">
+      <div class="card">
+        <div style="font-size:12px; font-weight:700; color:var(--accent); text-transform:uppercase;">1. Support & Resistance</div>
+        <div style="font-size:18px; font-weight:700; margin:6px 0;">Structural Floors</div>
+        <div style="font-size:13px; color:var(--text-muted); line-height:1.5;">Identify the horizontal price ceiling that has rejected rallies 2+ times. Map the price floor where buyers defend.</div>
+      </div>
+      <div class="card">
+        <div style="font-size:12px; font-weight:700; color:var(--gain); text-transform:uppercase;">2. Moving Average Cross</div>
+        <div style="font-size:18px; font-weight:700; margin:6px 0;">20 EMA > 50 SMA</div>
+        <div style="font-size:13px; color:var(--text-muted); line-height:1.5;">Confirm momentum has flipped bullish with short-term EMA crossing above medium-term SMA and daily closes above.</div>
+      </div>
+      <div class="card">
+        <div style="font-size:12px; font-weight:700; color:#ff9f0a; text-transform:uppercase;">3. Volume Confirmation</div>
+        <div style="font-size:18px; font-weight:700; margin:6px 0;">2x–3x Volume Spike</div>
+        <div style="font-size:13px; color:var(--text-muted); line-height:1.5;">Never buy dry breakouts. Wait for a massive volume surge confirming institutions are driving the move.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: 3-PILLAR SCREENER -->
+  <div class="slide" id="s4">
+    <div class="slide-num">Corporate Due Diligence · Ruby Ihekweme</div>
+    <div class="slide-title">The Claude 3-Pillar Stock Risk Screener</div>
+    <div class="slide-desc">Pre-flight fundamental gatekeeper before allocating capital to any company.</div>
+    <div class="grid g3">
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <div style="font-weight:700; font-size:16px; margin-bottom:8px;">Pillar 1: Earnings & Margins</div>
+        <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+          • 3–5 year top-line revenue CAGR.<br>
+          • Gross margin stability through inflation.<br>
+          • Positive net margin retention.
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid var(--gain);">
+        <div style="font-weight:700; font-size:16px; margin-bottom:8px;">Pillar 2: Relative Valuation</div>
+        <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+          • P/E multiple vs sector peers.<br>
+          • Price-to-Book (P/B) ratio.<br>
+          • EV/EBITDA enterprise multiple.
+        </div>
+      </div>
+      <div class="card" style="border-top:3px solid #ff9f0a;">
+        <div style="font-weight:700; font-size:16px; margin-bottom:8px;">Pillar 3: Balance Sheet Health</div>
+        <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+          • Debt-to-Equity (D/E) safety margin.<br>
+          • Current Ratio > 1.2x liquidity.<br>
+          • Positive real Free Cash Flow (FCF).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: INCOME SCALING -->
+  <div class="slide" id="s5">
+    <div class="slide-num">Wealth Philosophy · Isobel Lorna</div>
+    <div class="slide-title">Scaling Income vs. Cutting Pennies</div>
+    <div class="slide-desc">The mathematical asymmetry of wealth creation: why earning power compounds faster than extreme frugality.</div>
+    <div class="grid g2">
+      <div class="card">
+        <div style="font-size:12px; font-weight:700; color:var(--loss); text-transform:uppercase;">The Biological & Math Floor</div>
+        <div style="font-size:22px; font-weight:800; margin:6px 0;">Frugality Has a Hard Ceiling</div>
+        <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+          You can only cut living expenses down to zero. Spending 3 hours rationing pennies drains finite mental bandwidth that should be deployed on high-leverage business.
+        </div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--gain);">
+        <div style="font-size:12px; font-weight:700; color:var(--gain); text-transform:uppercase;">The Infinite Ceiling</div>
+        <div style="font-size:22px; font-weight:800; margin:6px 0;">Skill-Based Income Has No Limit</div>
+        <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">
+          Investing that same time into high-value technical skills, sales, and software systems unlocks scalable cash flow that purchases foundational assets with ease.
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav-bar">
+  <button class="btn" id="prev-btn" onclick="prevSlide()">← Previous</button>
+  <div class="progress-dots" id="dots"></div>
+  <button class="btn" id="next-btn" onclick="nextSlide()" style="background:var(--accent); border-color:var(--accent);">Next Slide →</button>
+</div>
+
+<script>
+let cur = 0;
+const slides = document.querySelectorAll('.slide');
+const dotsContainer = document.getElementById('dots');
+
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => goTo(i);
+  dotsContainer.appendChild(d);
+});
+
+function update() {
+  slides.forEach((s, i) => s.classList.toggle('active', i === cur));
+  document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === cur));
+  document.getElementById('prev-btn').disabled = cur === 0;
+  document.getElementById('next-btn').textContent = cur === slides.length - 1 ? 'Finish & Return ↗' : 'Next Slide →';
+}
+
+function nextSlide() {
+  if (cur < slides.length - 1) { cur++; update(); }
+  else { window.location.href = '/'; }
+}
+function prevSlide() {
+  if (cur > 0) { cur--; update(); }
+}
+function goTo(i) {
+  cur = i; update();
+}
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+});
+</script>
+
+</body>
+</html>
