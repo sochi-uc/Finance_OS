@@ -34,3 +34,12 @@ Current thesis: UCAP = "picks & shovels" on bank recapitalisation + Dangote IPO 
 | Convert USD back to ₦ | `POST /api/usd/withdraw {"usd":20,"rate":1510}` |
 | Buy/sell US asset | `POST /api/trades {"action":"BUY","ticker":"VOO","units":0.05,"price":505,"ccy":"USD"}` (debits wallet + 1.5% Bamboo fee) |
 Avg FX cost = `ngn_spent / usd_funded`. Display currency is always ₦; USD assets are converted at `settings.fx`.
+
+## Standard Playbooks & Frontend Heuristics (October 2026)
+- **Autonomous Web Design (Nate Herk standard):** Read `docs/AUTONOMOUS_WEB_DESIGN.md`. Adhere to Emil Kowalski micro-typography, generous spatial rhythm, Apple/Linear physics-based easing, and Figma/Playwright MCP verification.
+- **Investment Playbook:** Read `docs/INVESTMENT_PLAYBOOK.md` for full execution protocols on:
+  - NIDF Public Offer Arbitrage (Kolade Alabi)
+  - Stock Numbers Decoder (Dahlia)
+  - Income Scaling vs Frugality (Isobel Lorna)
+  - 3-Pillar Corporate Risk Screener (Ruby Ihekweme)
+  - 9 NGX 100%+ Multi-Baggers & Technical Breakout Protocols (Engr. Achie)

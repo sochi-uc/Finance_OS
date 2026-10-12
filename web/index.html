@@ -728,10 +728,12 @@ const IC = {
 
 const QUOTES = [
   { text: "The stock market is a device for transferring money from the impatient to the patient.", author: "Warren Buffett" },
+  { text: "There is a hard ceiling on how much you can cut costs, but zero ceiling on what you can earn. Build high-leverage skills instead of saving pennies.", author: "Isobel Lorna" },
   { text: "Wealth is what you don't see. It's the cars not purchased, the diamonds not bought.", author: "Morgan Housel" },
+  { text: "NIDF locks in a 42% upfront discount and 15.5% quarterly yield. Predictable cash flow beats speculative hype every single time.", author: "Kolade Alabi" },
   { text: "Compound interest is the eighth wonder of the world. He who understands it, earns it.", author: "Albert Einstein" },
   { text: "Do not save what is left after spending, but spend what is left after saving.", author: "Warren Buffett" },
-  { text: "A wealth of information creates a poverty of attention.", author: "Herbert Simon" },
+  { text: "Never chase breakouts on dry volume. Wait for the institutional volume spike to confirm the smart money has stepped in.", author: "Engr. Achie" },
   { text: "Risk is what's left over after you've thought of everything.", author: "Carl Richards" }
 ];
 let quoteIdx = 0;
@@ -963,11 +965,149 @@ const V = {
 foresight(d) {
   return `
   <div class="ph"><div class="ph-left">
-    <div class="ph-title">AI Foresight & Predictions</div>
-    <div class="ph-sub">Projections based on Q4 2026 data and the enlarged portfolios.</div>
+    <div class="ph-title">Strategic Intelligence & Playbook</div>
+    <div class="ph-sub">Arbitrage setups, multi-bagger benchmarks, 3-pillar risk screening & execution rules.</div>
   </div></div>
 
   <div class="grid">
+    <!-- NIDF PUBLIC OFFER ARBITRAGE -->
+    <div class="card c12" style="border-left: 3px solid var(--c-gain);">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+        <div>
+          <div class="card-label" style="color:var(--c-gain)">Cash Flow & Dividend Arbitrage · Kolade Alabi (@iam_kriyl)</div>
+          <div style="font-size:18px; font-weight:700; letter-spacing:-0.03em;">Nigeria Infrastructure Debt Fund (NIDF) Public Offer</div>
+        </div>
+        <span class="tag" style="background:var(--c-gain-bg); color:var(--c-gain); font-weight:700; padding:4px 10px; border-radius:99px;">42% Upfront Discount</span>
+      </div>
+      
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:16px;">
+        <div style="background:var(--c-s2); padding:12px 14px; border-radius:10px; border:1px solid var(--c-border);">
+          <div style="font-size:11px; color:var(--c-ink3); text-transform:uppercase; letter-spacing:0.05em;">Public Offer Price</div>
+          <div class="num-lg" style="color:var(--c-gain); margin-top:2px;">₦113.40</div>
+          <div style="font-size:11px; color:var(--c-ink2); margin-top:4px;">100k units = ₦11.34m (Closes late Oct)</div>
+        </div>
+        <div style="background:var(--c-s2); padding:12px 14px; border-radius:10px; border:1px solid var(--c-border);">
+          <div style="font-size:11px; color:var(--c-ink3); text-transform:uppercase; letter-spacing:0.05em;">Secondary Market Price</div>
+          <div class="num-lg" style="color:var(--c-ink); margin-top:2px;">₦162.00</div>
+          <div style="font-size:11px; color:var(--c-ink2); margin-top:4px;">100k units = ₦16.20m on Bamboo/Chaka</div>
+        </div>
+        <div style="background:var(--c-s2); padding:12px 14px; border-radius:10px; border:1px solid var(--c-border);">
+          <div style="font-size:11px; color:var(--c-ink3); text-transform:uppercase; letter-spacing:0.05em;">Offer Dividend Yield</div>
+          <div class="num-lg" style="color:var(--c-gain); margin-top:2px;">15.5% – 16.0%</div>
+          <div style="font-size:11px; color:var(--c-ink2); margin-top:4px;">vs 11.0% on secondary market</div>
+        </div>
+        <div style="background:var(--c-s2); padding:12px 14px; border-radius:10px; border:1px solid var(--c-border);">
+          <div style="font-size:11px; color:var(--c-ink3); text-transform:uppercase; letter-spacing:0.05em;">Quarterly Distribution</div>
+          <div class="num-lg" style="color:var(--c-accent); margin-top:2px;">~₦4.40 / unit</div>
+          <div style="font-size:11px; color:var(--c-ink2); margin-top:4px;">~₦17.60/yr · 6–7 yr full cost payback</div>
+        </div>
+      </div>
+
+      <div style="font-size:13px; color:var(--c-ink2); line-height:1.6; border-top:1px solid var(--c-border); padding-top:12px;">
+        <b>The Arbitrage Play:</b> Entering via the public offer locks in an immediate ₦48.60/unit spread (₦4.86m instant savings on 100k units). Annual cash flow on 100k units generates <b>₦1.58m – ₦1.76m</b> deposited quarterly.<br>
+        <b>Strategic Takeaway:</b> NIDF is engineered for defensive, predictable quarterly liquidity, not speculative price pumps. Excellent cash generator for compounding back into NGX equities.
+      </div>
+    </div>
+
+    <!-- 9 NGX STOCKS WITH 100%+ RETURNS IN 2026 -->
+    <div class="card c6">
+      <div class="card-label" style="color:var(--c-accent)">2026 Outperformers · Engr. Achie (@blvck_av)</div>
+      <div style="font-size:16px; font-weight:700; margin-bottom:8px;">9 NGX Multi-Baggers (100%+ Gains)</div>
+      <div style="font-size:12px; color:var(--c-ink3); margin-bottom:12px;">Historical evidence of asymmetric upside when entering before momentum flips:</div>
+
+      <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+        <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
+          <span><b>SEPLAT Energy</b> (Entered Dec 2025)</span>
+          <span style="color:var(--c-gain); font-weight:700;">+134%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
+          <span><b>UPDC / UPDC REIT</b> (Sub-1 year play)</span>
+          <span style="color:var(--c-gain); font-weight:700;">+170%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
+          <span><b>BUA Foods (BUAFOODS)</b></span>
+          <span style="color:var(--c-gain); font-weight:700;">+120%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
+          <span><b>Julius Berger (JBERGER)</b></span>
+          <span style="color:var(--c-gain); font-weight:700;">+108%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px; border-left:2px solid var(--c-accent);">
+          <span><b>Aradel Holdings (ARADEL)</b> (Owned)</span>
+          <span style="color:var(--c-gain); font-weight:700;">+170% Peak (+90% current)</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
+          <span><b>BUA Cement (BUACEMENT)</b></span>
+          <span style="color:var(--c-gain); font-weight:700;">+170% Peak (+80% current)</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
+          <span><b>NGX Group (NGXGROUP)</b> (₦61 → ₦165)</span>
+          <span style="color:var(--c-gain); font-weight:700;">+120%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
+          <span><b>Transcorp / PZ Cussons</b> (₦32 → ₦100+)</span>
+          <span style="color:var(--c-gain); font-weight:700;">+145% Peak</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding:6px 8px; background:var(--c-s2); border-radius:6px;">
+          <span><b>May & Baker (MAYBAKER)</b> (Dec → Feb ₦45)</span>
+          <span style="color:var(--c-gain); font-weight:700;">+90% to +100%</span>
+        </div>
+      </div>
+      <div style="font-size:11px; color:var(--c-ink3); margin-top:10px; line-height:1.4;">
+        <b>The Pattern:</b> Multi-baggers consistently originate from late-December liquidity troughs or deep consolidation. Patience through 2–9 month cycles captures the entire run.
+      </div>
+    </div>
+
+    <!-- 3-PILLAR RISK SCREENER & TECHNICAL BREAKOUTS -->
+    <div class="card c6">
+      <div class="card-label" style="color:var(--c-accent)">Execution Frameworks · Ruby Ihekweme & Engr. Achie</div>
+      <div style="font-size:16px; font-weight:700; margin-bottom:8px;">Stock Risk Screener & Breakout Timing</div>
+      
+      <div style="background:var(--c-s2); padding:10px 12px; border-radius:8px; margin-bottom:10px; border:1px solid var(--c-border);">
+        <div style="font-size:11px; font-weight:700; color:var(--c-accent); text-transform:uppercase;">The 3-Pillar Risk Screener (Ruby Ihekweme)</div>
+        <ul style="margin:4px 0 0 16px; padding:0; font-size:12px; color:var(--c-ink2); line-height:1.5;">
+          <li><b>Pillar 1: Earnings & Margins</b> — 3–5 yr revenue CAGR, stable gross/net profit margins through inflation cycles.</li>
+          <li><b>Pillar 2: Relative Valuation</b> — Compare P/E, P/B, and EV/EBITDA against direct sector rivals on NGX.</li>
+          <li><b>Pillar 3: Balance Sheet Health</b> — Debt-to-Equity safety, Current Ratio > 1.2x, positive real Free Cash Flow.</li>
+        </ul>
+      </div>
+
+      <div style="background:var(--c-s2); padding:10px 12px; border-radius:8px; border:1px solid var(--c-border);">
+        <div style="font-size:11px; font-weight:700; color:var(--c-gain); text-transform:uppercase;">Technical Breakout Checklist (Engr. Achie)</div>
+        <ul style="margin:4px 0 0 16px; padding:0; font-size:12px; color:var(--c-ink2); line-height:1.5;">
+          <li><b>1. Support & Resistance</b> — Identify multi-tested resistance ceiling and concrete price floor.</li>
+          <li><b>2. Moving Average Cross</b> — Wait for 20 EMA / 50 SMA bullish cross and daily candle closes above.</li>
+          <li><b>3. Volume Confirmation</b> — Never buy dry breakouts. Wait for 2x–3x volume spikes confirming institutional footprint.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- STOCK NUMBERS DECODER & INCOME MINDSET -->
+    <div class="card c6">
+      <div class="card-label">Foundations · Dahlia (@getontopwithdahlia)</div>
+      <div style="font-size:16px; font-weight:700; margin-bottom:10px;">Decoding Stock Page Numbers</div>
+      
+      <div style="display:flex; flex-direction:column; gap:8px; font-size:12px; color:var(--c-ink2);">
+        <div><b>Market Cap:</b> Share Price × Total Shares. Measures company scale, balance sheet dominance, and institutional liquidity.</div>
+        <div><b>P/E Ratio:</b> Valuation multiple. Number of years of current profits you are paying for today. Low P/E can signal value or structural distress.</div>
+        <div><b>Dividend Yield:</b> Annual cash dividend ÷ Share price. Represents tangible cash yield on deployed capital.</div>
+        <div><b>Beta:</b> Volatility gauge vs NGX Index. Beta > 1 moves faster than the market; Beta < 1 provides portfolio stability.</div>
+        <div><b>52-Week Range:</b> Trailing 1-year low and high. Protects against buying at overextended cyclical tops.</div>
+      </div>
+    </div>
+
+    <div class="card c6">
+      <div class="card-label">Income Asymmetry · Isobel Lorna (@isobellorna_)</div>
+      <div style="font-size:16px; font-weight:700; margin-bottom:10px;">Scaling Income vs. Cutting Pennies</div>
+      
+      <div style="font-size:13px; color:var(--c-ink2); line-height:1.6;">
+        <p><b>The Core Rule:</b> There is an absolute mathematical floor on how much you can cut costs, but there is <b>zero ceiling</b> on what you can earn.</p>
+        <p><b>The Diet Coke Analogy:</b> Spending 3 hours rationing pennies or obsessing over small daily expenses drains cognitive energy. Redirecting those hours into high-leverage skills and scalable work builds the capital to acquire high-conviction assets effortlessly.</p>
+        <p><b>The Portfolio Mandate:</b> Frugality protects capital; skill-based income expansion compounds it into financial independence.</p>
+      </div>
+    </div>
+
+    <!-- ARADEL SUPER-MAJOR CARD -->
     <div class="card c12">
       <div class="card-label" style="color:var(--c-accent)">The Aradel Super-Major Shift (2026-2027)</div>
       <div style="font-size:14px;color:var(--c-ink2);line-height:1.6">
@@ -977,6 +1117,7 @@ foresight(d) {
       </div>
     </div>
 
+    <!-- UCAP & ZENITH CARDS -->
     <div class="card c6">
       <div class="card-label">UCAP & The Dangote IPO</div>
       <div style="font-size:14px;color:var(--c-ink2);line-height:1.6">
