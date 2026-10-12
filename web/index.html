@@ -16,57 +16,51 @@
 <title>Ledger · Sochi</title>
 <style>
 /* ─── DESIGN TOKENS ─────────────────────────────────────── */
+
 :root {
-  --c-bg:       #0a0a0a;
-  --c-s0:       #111111;
-  --c-s1:       #1a1a1a;
-  --c-s2:       #242424;
-  --c-s3:       #2e2e2e;
-  --c-border:   rgba(255,255,255,.06);
-  --c-border-h: rgba(255,255,255,.11);
-  --c-ink:      #f5f5f5;
+  --c-bg:       #050505;
+  --c-s0:       #0a0a0a;
+  --c-s1:       #121212;
+  --c-s2:       #1a1a1a;
+  --c-s3:       #242424;
+  --c-border:   #222;
+  --c-border-h: #333;
+  --c-ink:      #ffffff;
   --c-ink2:     #a0a0a0;
   --c-ink3:     #666;
-  --c-accent:   #6e3ff3;
-  --c-accent-h: #7c4ff5;
+  --c-accent:   #0a84ff;
+  --c-accent-h: #409cff;
   --c-gain:     #30d158;
   --c-gain-bg:  rgba(48,209,88,.1);
   --c-loss:     #ff453a;
   --c-loss-bg:  rgba(255,69,58,.1);
-  --c-warn:     #ffd60a;
-  --c-warn-bg:  rgba(255,214,10,.09);
-  --nav-w: 232px;
-  --r: 16px;
-  --r-sm: 10px;
-  --sb: env(safe-area-inset-bottom,0px);
-  --st: env(safe-area-inset-top,0px);
-  --sl: env(safe-area-inset-left,0px);
-  --f: 'Inter', -apple-system, 'SF Pro Text', system-ui, sans-serif;
+  --f:          'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --sb: env(safe-area-inset-bottom, 0px);
+  --st: env(safe-area-inset-top, 0px);
 }
 [data-theme="light"] {
   --c-bg:       #f2f2f7;
   --c-s0:       #ffffff;
-  --c-s1:       #f9f9fb;
-  --c-s2:       #ebebf0;
-  --c-s3:       #dddde0;
-  --c-border:   rgba(0,0,0,.07);
-  --c-border-h: rgba(0,0,0,.13);
-  --c-ink:      #1c1c1e;
+  --c-s1:       #fcfcfc;
+  --c-s2:       #f5f5f5;
+  --c-s3:       #e5e5e5;
+  --c-border:   #e5e5ea;
+  --c-border-h: #d1d1d6;
+  --c-ink:      #000000;
   --c-ink2:     #636366;
   --c-ink3:     #8e8e93;
-  --c-accent:   #5e2cf5;
-  --c-accent-h: #6d3af6;
-  --c-gain:     #34c759;
-  --c-gain-bg:  rgba(52,199,89,.1);
-  --c-loss:     #ff3b30;
-  --c-loss-bg:  rgba(255,59,48,.1);
-  --c-warn:     #ff9500;
-  --c-warn-bg:  rgba(255,149,0,.1);
 }
 
-/* ─── RESET ────────────────────────────────────────────── */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{height:100%;-webkit-text-size-adjust:100%}
+body {
+  background: var(--c-bg);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+  color: var(--c-ink);
+  font: 14px/1.5 var(--f);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0; padding: 0;
+  overscroll-behavior: none;
+}
 body{
   font:400 14px/1.55 var(--f);
   color:var(--c-ink);
@@ -128,12 +122,7 @@ input,textarea,select{font:inherit}
 
 .nav-divider{height:1px;background:var(--c-border);margin:8px 0}
 
-.nav-footer{
-  position: fixed; bottom: 20px; left: 20px; width: calc(var(--nav-w) - 40px); z-index: 100;
-  padding-top:12px;
-  border-top:1px solid var(--c-border);
-  display:flex;align-items:center;justify-content:space-between;
-}
+
 .live-badge{
   display:flex;align-items:center;gap:6px;
   font-size:11px;color:var(--c-ink3);padding:0 6px;
@@ -200,12 +189,33 @@ input,textarea,select{font:inherit}
 .c3 {grid-column:span 3}
 
 /* ─── CARD ─────────────────────────────────────────────── */
-.card{
-  background:var(--c-s0);
-  border:1px solid var(--c-border);
-  border-radius:var(--r);padding:20px;
-  transition:border-color .2s;
+
+.card {
+  background: var(--c-s1);
+  border: 1px solid var(--c-border);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 24px -4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
 }
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+  border-color: var(--c-border-h);
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(800px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(255,255,255,0.03), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+.card:hover::before { opacity: 1; }
+
 .card:hover{border-color:var(--c-border-h)}
 .card-label{
   font-size:11px;font-weight:600;
@@ -287,7 +297,22 @@ body.private .pnum{
 .h-units{font-size:11px;color:var(--c-ink3);margin-top:1px}
 
 /* ─── BUTTONS ──────────────────────────────────────────── */
-.btn{
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none; outline: none; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.btn:active { transform: scale(0.95); box-shadow: none; }
+.btn-primary { background: var(--c-accent); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.2); }
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.num-lg, .num-md, .h-val, .pnum {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+/*
   display:inline-flex;align-items:center;justify-content:center;gap:7px;
   font:600 13px var(--f);border-radius:10px;padding:9px 16px;min-height:38px;
   cursor:pointer;border:none;transition:opacity .15s,background .15s,transform .1s;
@@ -364,7 +389,22 @@ select{
 /* ─── QUICK NOTE BAR ───────────────────────────────────── */
 .qbar{display:flex;gap:8px;margin-bottom:20px}
 .qbar input{flex:1;margin-top:0;font-size:16px;padding:10px 14px;border-radius:10px}
-.qbar .btn{flex-shrink:0;padding:10px 18px}
+.qbar 
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
+  cursor: pointer; border: none; outline: none; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.btn:active { transform: scale(0.95); box-shadow: none; }
+.btn-primary { background: var(--c-accent); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.2); }
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.num-lg, .num-md, .h-val, .pnum {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+/*flex-shrink:0;padding:10px 18px}
 
 /* ─── CHART ────────────────────────────────────────────── */
 svg text{fill:var(--c-ink3);font:11px var(--f)}
@@ -502,6 +542,40 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
 .card:nth-child(9) { animation-delay: 0.45s; }
 .card:nth-child(10) { animation-delay: 0.5s; }
 
+
+.floating-controls {
+  position: fixed;
+  top: max(env(safe-area-inset-top, 16px), 16px);
+  right: max(env(safe-area-inset-right, 16px), 16px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 14px;
+  background: var(--c-s1);
+  border: 1px solid var(--c-border);
+  border-radius: 99px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+[data-theme="light"] .floating-controls {
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.ctrl-divider {
+  width: 1px; height: 16px; background: var(--c-border);
+}
+.ctrl-group { display: flex; gap: 4px; }
+.ctrl-btn {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: transparent; color: var(--c-ink3);
+  border: none; cursor: pointer; transition: all 0.15s cubic-bezier(0.16,1,0.3,1);
+}
+.ctrl-btn:hover { background: var(--c-s2); color: var(--c-ink); transform: scale(1.05); }
+.ctrl-btn:active { transform: scale(0.9); }
+
 /* ─── MOBILE NAV ───────────────────────────────────────── */
 @media(max-width:639px){
   #nav{
@@ -515,7 +589,7 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
   }
   [data-theme="light"] #nav{background:rgba(255,255,255,.88)}
   .brand,.nav-section,.nav-divider{display:none}
-  .nav-footer { position: fixed; top: env(safe-area-inset-top, 12px); right: 12px; margin-top: 12px; flex-direction: row; z-index: 9999; display: flex; padding: 4px 8px; background: rgba(10,10,10,0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--c-border); border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); } [data-theme="light"] .nav-footer { background: rgba(255,255,255,0.8); }
+  
   .nav-item{
     flex-direction:column;gap:3px;
     padding:10px 6px 8px;font-size:10px;
@@ -542,6 +616,47 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
+
+/* SUPERCHARGED CRAFTSMAN CSS */
+.btn { transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: inset 0 1px 0 rgba(255,255,255,0.05); }
+.btn:active { transform: scale(0.95); }
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+.num-lg, .num-md, .h-val, .pnum { font-variant-numeric: tabular-nums; letter-spacing: -0.03em; }
+.ph-title { letter-spacing: -0.04em; background: linear-gradient(180deg, var(--c-ink) 0%, var(--c-ink2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.card-label { text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px; font-weight: 700; opacity: 0.8; }
+.prog-fill { position: relative; overflow: hidden; }
+.prog-fill::after { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transform: translateX(-100%); animation: shimmer 2s infinite; }
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--c-s3); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--c-ink3); }
+
+
+/* CRAFTSMAN NAV & TABS */
+.nav-item {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.2s, background 0.2s;
+}
+.nav-item:active {
+  transform: scale(0.85);
+}
+.nav-item.active {
+  animation: nav-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes nav-pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Subtle glow behind active nav item */
+.nav-item.active::after {
+  content: ""; position: absolute; width: 30px; height: 30px; background: var(--c-accent); opacity: 0.15; border-radius: 50%; filter: blur(8px); z-index: -1;
+}
+
+/* Refined typography */
+body { letter-spacing: -0.01em; }
+
 </style>
 </head>
 <body>
@@ -554,6 +669,18 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
 
 <script>
 'use strict';
+
+// Craftsman Micro-interactions
+document.addEventListener('mousemove', e => {
+  document.querySelectorAll('.card').forEach(card => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty('--mouse-x', `${x}px`);
+    card.style.setProperty('--mouse-y', `${y}px`);
+  });
+});
+
 
 const ACCENTS = [
   { c: '#6e3ff3', h: '#7c4ff5' },
@@ -598,6 +725,38 @@ const IC = {
 };
 
 /* ─── CONSTANTS ────────────────────────────────────────── */
+
+const QUOTES = [
+  { text: "The stock market is a device for transferring money from the impatient to the patient.", author: "Warren Buffett" },
+  { text: "Wealth is what you don't see. It's the cars not purchased, the diamonds not bought.", author: "Morgan Housel" },
+  { text: "Compound interest is the eighth wonder of the world. He who understands it, earns it.", author: "Albert Einstein" },
+  { text: "Do not save what is left after spending, but spend what is left after saving.", author: "Warren Buffett" },
+  { text: "A wealth of information creates a poverty of attention.", author: "Herbert Simon" },
+  { text: "Risk is what's left over after you've thought of everything.", author: "Carl Richards" }
+];
+let quoteIdx = 0;
+let quoteTimer = null;
+
+function startQuotes() {
+  if(quoteTimer) clearInterval(quoteTimer);
+  const qText = document.getElementById('q-text');
+  const qAuth = document.getElementById('q-auth');
+  if(!qText || !qAuth) return;
+  
+  quoteTimer = setInterval(() => {
+    const el = document.getElementById('quote-box');
+    if(el) {
+        el.style.opacity = 0;
+        setTimeout(() => {
+            quoteIdx = (quoteIdx + 1) % QUOTES.length;
+            qText.innerText = `"${QUOTES[quoteIdx].text}"`;
+            qAuth.innerText = `— ${QUOTES[quoteIdx].author}`;
+            el.style.opacity = 1;
+        }, 400);
+    }
+  }, 10000);
+}
+
 const TABS = [
   {id:'home', label:'Overview', icon:IC.home},
   {id:'ngn',  label:'Naira',    icon:IC.chart},
@@ -847,8 +1006,21 @@ home(d) {
   const hr=new Date().getHours();
   const greet=hr<12?'Good morning':'Good afternoon';
 
+  
+  setTimeout(startQuotes, 100);
+  
   return `
-  <div class="qbar">
+  <div class="grid" style="margin-bottom:20px; align-items: stretch;">
+    <div class="c8 qbar" style="margin-bottom:0;">
+      <input id="qnote" type="text" placeholder="Type a note, observation, or thesis — it posts to your Journal">
+      <button class="btn btn-primary" data-act="qnote" style="gap:6px">${IC.send} Post</button>
+    </div>
+    <div class="c4 card" id="quote-box" style="margin-bottom:0; display:flex; flex-direction:column; justify-content:center; padding:12px 16px; transition: opacity 0.4s ease; background: var(--c-s1); border-left: 3px solid var(--c-accent);">
+      <div id="q-text" style="font-size:12px; font-style:italic; color:var(--c-ink2); line-height:1.4;">"${QUOTES[0].text}"</div>
+      <div id="q-auth" style="font-size:10px; font-weight:600; color:var(--c-ink3); margin-top:6px; text-transform:uppercase; letter-spacing:0.05em;">— ${QUOTES[0].author}</div>
+    </div>
+  </div>
+
     <input id="qnote" type="text" placeholder="Type a note, observation, or thesis — it posts to your Journal">
     <button class="btn btn-primary" data-act="qnote" style="gap:6px">${IC.send} Post</button>
   </div>
@@ -964,8 +1136,8 @@ home(d) {
 ngn(d) {
   return `
   <div class="ph"><div class="ph-left">
-    <div class="ph-title">Naira Portfolio</div>
-    <div class="ph-sub">NGX stocks & private ventures · tap any position for full analysis</div>
+    <div class="ph-title">Naira Assets</div>
+    <div class="ph-sub">NGX Equities and Private Allocations · tap any position for full analysis</div>
   </div></div>
   <div class="grid">
     <div class="card c12">
@@ -1151,8 +1323,9 @@ function render(opts={}) {
 
   // Inject a separate floating control for mobile (and desktop footer) outside nav
   const controlsHTML = `
-    <div class="nav-footer" id="floating-controls">
+    <div class="floating-controls" id="floating-controls">
       <div class="live-badge"><span class="live-dot"></span><span id="sync-lbl">Live</span></div>
+      <div class="ctrl-divider"></div>
       <div class="ctrl-group">
         <button class="ctrl-btn" id="ctrl-eye"   onclick="togglePrivacy()" title="${priv?'Show numbers':'Hide numbers'}">${priv?IC.eyeoff:IC.eye}</button>
         <button class="ctrl-btn" id="ctrl-theme" onclick="toggleTheme()"   title="${darkMode?'Light mode':'Dark mode'}">${darkMode?IC.sun:IC.moon}</button>
