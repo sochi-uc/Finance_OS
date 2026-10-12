@@ -34,6 +34,11 @@
   --c-gain-bg:  rgba(48,209,88,.1);
   --c-loss:     #ff453a;
   --c-loss-bg:  rgba(255,69,58,.1);
+  --c-warn:     #ff9f0a;
+  --c-warn-bg:  rgba(255,159,10,.12);
+  --nav-w:      240px;
+  --r:          16px;
+  --r-sm:       10px;
   --f:          'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --sb: env(safe-area-inset-bottom, 0px);
   --st: env(safe-area-inset-top, 0px);
@@ -49,6 +54,22 @@
   --c-ink:      #000000;
   --c-ink2:     #636366;
   --c-ink3:     #8e8e93;
+  --c-gain-bg:  rgba(48,209,88,.15);
+  --c-loss-bg:  rgba(255,69,58,.15);
+  --c-warn-bg:  rgba(255,159,10,.15);
+}
+[data-theme="light"] .card {
+  background: rgba(255, 255, 255, 0.82) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+[data-theme="light"] .drw-panel {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-left-color: rgba(0, 0, 0, 0.1) !important;
+}
+[data-theme="light"] .mobile-top-bar {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
 }
 
 body {
@@ -385,18 +406,9 @@ body.private .pnum{
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
-/*
-  display:inline-flex;align-items:center;justify-content:center;gap:7px;
-  font:600 13px var(--f);border-radius:10px;padding:9px 16px;min-height:38px;
-  cursor:pointer;border:none;transition:opacity .15s,background .15s,transform .1s;
-  white-space:nowrap;
-}
-.btn:active{transform:scale(.97)}
-.btn-primary{background:var(--c-accent);color:#fff}
-.btn-primary:hover{background:var(--c-accent-h)}
-.btn-secondary{background:var(--c-s2);color:var(--c-ink);border:1px solid var(--c-border)}
-.btn-secondary:hover{background:var(--c-s3);border-color:var(--c-border-h)}
-.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.btn-secondary { background: var(--c-s2); color: var(--c-ink); border: 1px solid var(--c-border); }
+.btn-secondary:hover { background: var(--c-s3); border-color: var(--c-border-h); }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
 
 /* ─── INPUTS ───────────────────────────────────────────── */
 .field{display:block;font-size:12px;color:var(--c-ink2);font-weight:500;margin-top:14px}
@@ -462,7 +474,7 @@ select{
 /* ─── QUICK NOTE BAR ───────────────────────────────────── */
 .qbar{display:flex;gap:8px;margin-bottom:20px}
 .qbar input{flex:1;margin-top:0;font-size:16px;padding:10px 14px;border-radius:10px}
-.qbar 
+
 .btn {
   display: inline-flex; align-items: center; justify-content: center;
   padding: 10px 18px; border-radius: 10px; font-size: 13px; font-weight: 600;
@@ -477,7 +489,6 @@ select{
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
-/*flex-shrink:0;padding:10px 18px}
 
 /* ─── CHART ────────────────────────────────────────────── */
 svg text{fill:var(--c-ink3);font:11px var(--f)}
@@ -529,7 +540,7 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
 .acc-right{display:flex;align-items:center;gap:10px}
 
 /* ─── MODAL SHEET ──────────────────────────────────────── */
-#sheet{position:fixed;inset:0;z-index:50;display:none}
+#sheet{position:fixed;inset:0;z-index:130;display:none}
 #sheet.open{display:block}
 .sheet-scrim{
   position:absolute;inset:0;
@@ -560,7 +571,7 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
 }
 
 /* ─── DETAIL DRAWER ────────────────────────────────────── */
-#drawer{position:fixed;inset:0;z-index:55;display:none}
+#drawer{position:fixed;inset:0;z-index:120;display:none}
 #drawer.open{display:block}
 .drw-scrim{position:absolute;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:scrim-in .2s ease}
 .drw-panel{
@@ -594,6 +605,186 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
   padding:12px;font-size:13px;line-height:1.65;color:var(--c-ink2);
 }
 .analysis-card b{color:var(--c-ink)}
+
+/* ─── TACTILE INFO BUTTON (APPLE HIG) ──────────────────── */
+.info-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--c-s2);
+  border: 1px solid var(--c-border);
+  color: var(--c-ink3);
+  cursor: pointer;
+  padding: 0;
+  margin-left: 6px;
+  vertical-align: middle;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+/* Apple HIG 44x44px touch target bounds */
+.info-btn::before {
+  content: "";
+  position: absolute;
+  top: -12px; left: -12px; right: -12px; bottom: -12px;
+}
+.info-btn svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.info-btn:hover {
+  background: var(--c-s3);
+  color: var(--c-accent);
+  border-color: var(--c-accent);
+  transform: scale(1.1);
+}
+.info-btn:active {
+  transform: scale(0.9);
+}
+
+/* ─── FROSTED GLASS EXPLAINER MODAL ────────────────────── */
+#explainer {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: none;
+}
+#explainer.open {
+  display: block;
+}
+.exp-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  animation: scrim-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.exp-panel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(580px, calc(100vw - 32px));
+  max-height: min(86vh, 760px);
+  background: rgba(18, 18, 24, 0.90);
+  backdrop-filter: blur(36px) saturate(200%);
+  -webkit-backdrop-filter: blur(36px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 24px 26px calc(24px + var(--sb));
+  box-shadow: 0 32px 80px -16px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  animation: exp-in 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+[data-theme="light"] .exp-panel {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 32px 80px -16px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+@keyframes exp-in {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.96); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+@media (max-width: 639px) {
+  .exp-panel {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    max-height: 88dvh;
+    border-radius: 24px 24px 0 0;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    padding: 16px 20px calc(24px + var(--sb));
+    animation: exp-bottom-in 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes exp-bottom-in {
+    from { opacity: 0; transform: translateY(100%); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+.exp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 2px;
+}
+.exp-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-accent);
+  margin-bottom: 4px;
+  display: block;
+}
+.exp-title {
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--c-ink);
+  line-height: 1.25;
+}
+.exp-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--c-s2);
+  border: 1px solid var(--c-border);
+  display: grid;
+  place-items: center;
+  color: var(--c-ink2);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.exp-close:hover {
+  background: var(--c-s3);
+  color: var(--c-ink);
+  transform: scale(1.05);
+}
+.exp-close:active { transform: scale(0.92); }
+.exp-card {
+  background: var(--c-s1);
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  padding: 13px 15px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--c-ink2);
+}
+.exp-card-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--c-ink3);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.exp-card b { color: var(--c-ink); }
+.exp-footer {
+  margin-top: 6px;
+  display: flex;
+  justify-content: flex-end;
+}
 
 
 .card {
@@ -688,7 +879,7 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
     border-bottom: 1px solid var(--c-border);
     position: sticky;
     top: 0;
-    z-index: 80;
+    z-index: 60;
     margin: -16px -16px 16px -16px;
   }
   .mobile-brand {
@@ -733,7 +924,7 @@ svg text{fill:var(--c-ink3);font:11px var(--f)}
     background: rgba(12, 12, 16, 0.92);
     backdrop-filter: blur(28px) saturate(180%);
     -webkit-backdrop-filter: blur(28px) saturate(180%);
-    z-index: 100;
+    z-index: 70;
   }
   [data-theme="light"] #nav {
     background: rgba(255, 255, 255, 0.92);
@@ -864,6 +1055,7 @@ body { letter-spacing: -0.01em; }
 </div>
 <div id="sheet"></div>
 <div id="drawer"></div>
+<div id="explainer"></div>
 
 <script>
 'use strict';
@@ -920,7 +1112,210 @@ const IC = {
   gem:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/><line x1="12" y1="22" x2="12" y2="2"/><polyline points="2 8.5 12 14 22 8.5"/></svg>`,
   cam:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>`,
   send:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`,
+  info:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
 };
+
+/* ─── TACTILE INFO BUTTON HELPER ───────────────────────── */
+function infoBtn(key, title='View breakdown & intelligence') {
+  return `<button class="info-btn" data-info="${key}" title="${title}" aria-label="${title}" type="button">${IC.info}</button>`;
+}
+
+/* ─── EXPLAINERS DICTIONARY & INTELLIGENCE ─────────────── */
+const EXPLAINERS = {
+  net_worth: {
+    tag: 'Portfolio Intelligence',
+    title: 'Total Net Worth & Capital Base',
+    overview: 'The consolidated economic value of all liquid bank cash, publicly quoted Nigerian equities, private venture holdings, and foreign currency balances minus any outstanding liabilities. Serves as your master institutional compass for wealth accumulation.',
+    formula: '<code>Net Worth = (Access Bank + UBA + Bamboo USD × NGN/USD FX) + (NGX Equities + Private Ventures + US Stocks) - Liabilities</code>. Mark-to-market valuations update dynamically.',
+    playbook: 'Evaluate month-over-month capital trajectory rather than daily market swings. In inflationary environments like Nigeria, your strategic priority is steadily growing the ratio of productive assets (equities and cash-flowing ventures) relative to depreciating cash.',
+    benchmarks: 'Target baseline: ₦5,000,000+ total capital base by late 2027. Maintain compound return on invested capital above the domestic headline inflation rate.'
+  },
+  liquid_cash: {
+    tag: 'Treasury Management',
+    title: 'Liquid Cash & Operational Reserves',
+    overview: 'Instantly accessible cash held across Tier-1 Nigerian commercial banks and your digital dollar wallet. Engineered to guarantee psychological freedom, absorb campus emergency overhead, eliminate forced asset liquidation during market corrections, and maintain "Sniper Ammo" for market dips.',
+    formula: '<code>Liquid Cash = Access Bank (Primary Operating) + UBA (Campus Reserve) + Bamboo USD (Marked to NGN at parallel rate)</code>.',
+    playbook: 'Maintain at least 3 to 6 months of basic campus living expenses (minimum ₦200,000–₦300,000) permanently uncommitted. Any liquid surplus beyond this threshold constitutes tactical dry powder deployed into high-conviction DCA purchases.',
+    benchmarks: 'Current verified reserves: ₦640,000 across UBA and Access. Strict discipline: never use operating cash for speculative bets.'
+  },
+  allocation: {
+    tag: 'Portfolio Construction',
+    title: 'Strategic Asset Allocation Matrix',
+    overview: 'The proportional distribution of total wealth across Nigerian Public Equities, Private Ventures & Ajo, US Dollar Assets, and Liquid Bank Reserves. Asset allocation drives over 90% of long-term risk-adjusted portfolio returns.',
+    formula: 'Calculated as each individual asset class valuation divided by total gross asset pool.',
+    playbook: 'Target institutional allocation target bands: <b>45% NGX Core Equities</b> (domestic inflation hedge & high dividend yield), <b>25% US Equities / Dollar Cash</b> (structural currency protection), <b>20% Liquid Bank Cash</b> (stability & dip-buying liquidity), and <b>10% Private Ventures / Ajo</b> (campus cash flow).',
+    benchmarks: 'Perform a portfolio rebalancing audit semi-annually or whenever any asset bucket drifts more than 10% outside its target weighting.'
+  },
+  surplus: {
+    tag: 'Cash Flow Engine',
+    title: 'Monthly Investable Cash Surplus',
+    overview: 'The net free cash flow generated each month after meeting all campus living expenses, fixed overhead, and mandatory contributions. Surplus is the lifeblood and primary funding engine of your investment portfolio.',
+    formula: '<code>Monthly Surplus = Total Inflows - (Fixed Overhead + Variable Expenses + Savings Reserves)</code>.',
+    playbook: 'A durable surplus allows you to automate a monthly ₦20,000 Dollar-Cost Averaging (DCA) program into Tier-1 equities without relying on unpredictable trading gains or market timing.',
+    benchmarks: 'Maintain a minimum positive monthly surplus. Allocate at least ₦20,000 to automated monthly equity DCA, banking any excess as opportunistic sniper reserves.'
+  },
+  networth_history: {
+    tag: 'Long-Term Analytics',
+    title: 'Net Worth Trajectory & Snapshots',
+    overview: 'A longitudinal visual record tracking historical end-of-month portfolio balance points. Documents true long-term wealth compounding over multi-year macroeconomic cycles.',
+    formula: 'Constructed from immutable monthly snapshot entries logging cash reserves, investment portfolio value, and liabilities on the date recorded.',
+    playbook: 'Record a snapshot on the final business day of every month via the "Record snapshot" button. Review 6-month moving averages to confirm purchasing power is compounding ahead of naira devaluation.',
+    benchmarks: 'Look for an ascending stair-step pattern with resilient drawdowns during broader NGX market pullbacks.'
+  },
+  capitalization_strategy: {
+    tag: 'Execution Directive',
+    title: '2027 Capitalization Strategy & DCA Plan',
+    overview: 'A systematic capital deployment blueprint engineered to scale an institutional-grade investment portfolio across the Nigerian Exchange (NGX) and US markets through 2027.',
+    formula: 'Blends a non-negotiable ₦20,000 monthly Dollar-Cost Averaging (DCA) core engine with opportunistic "Sniper Ammo" deployment during market dislocations.',
+    playbook: '1. <b>Automated Monthly Buy:</b> Allocate ₦20,000 on a designated calendar date into one focus asset (e.g. UCAP, Zenith, Stanbic).<br>2. <b>Monthly Rotation:</b> Focus purchases on a single under-accumulated asset per month.<br>3. <b>Sniper Liquidity:</b> Hold extra cash liquid until high-conviction assets reach defined support floors (e.g. UCAP at ₦15.50 or Zenith below ₦125).',
+    benchmarks: 'Milestone target: Accumulate 100k units of NIDF and core equity compounders providing sustainable multi-million annual dividend cash flows.'
+  },
+  pro_chart: {
+    tag: 'Market Technicals',
+    title: 'Institutional Pro Chart Terminal',
+    overview: 'High-resolution price action and technical momentum station monitoring Tier-1 Nigerian equities. Identifies institutional support floors, resistance ceilings, moving average momentum stacks, and breakout volume thresholds.',
+    formula: 'Plots price path against 20-day Exponential Moving Average (EMA) and 50-day Simple Moving Average (SMA). Tracks percentage elevation within 52-week trading range.',
+    playbook: '• <b>Bullish Momentum Stack:</b> 20 EMA > 50 SMA signifies an active institutional markup phase. Buy pullbacks toward the rising 20 EMA.<br>• <b>Volume Confirmation:</b> Never buy breakouts on thin retail volume. Require 5M–10M+ daily volume confirmation before declaring a true breakout.<br>• <b>Range Trading:</b> Accumulate aggressively near support floors; trim or pause purchases near overhead resistance.',
+    benchmarks: 'Support floors offer optimal risk-reward entry points; avoid initiating fresh positions when price is extended >15% above the 20 EMA.'
+  },
+  nidf_arbitrage: {
+    tag: 'Asymmetric Opportunity',
+    title: 'NIDF Public Offer Arbitrage (42% Spread)',
+    overview: 'The Nigeria Infrastructure Debt Fund (NIDF) Public Offer presents a rare, low-risk fixed-income arbitrage opportunity, pricing newly issued shares at a massive discount relative to the prevailing secondary market price.',
+    formula: '<code>Public Offer: ₦113.40 vs Secondary Market: ₦162.00 = 42.8% immediate asset value spread (₦48.60/unit discount)</code>.',
+    playbook: '1. <b>Superior Cash Yield:</b> 15.5%–16.0% quarterly cash dividend yield at ₦113.40 entry vs 11.0% on secondary.<br>2. <b>Predictable Inflow:</b> Quarterly distributions averaging ~₦4.40/unit (₦17.60/yr). A 100k unit position generates ₦1.76M annual passive cash flow.<br>3. <b>Full Payback:</b> 100% of initial principal cost is fully recouped in 6 to 7 years strictly through cash distributions, while 100% of the underlying infrastructure asset ownership remains intact.',
+    benchmarks: 'Execution Directive: Maximize primary subscription allocation before the public offer window closes in late October 2026.'
+  },
+  core_catalysts: {
+    tag: 'Fundamental Thesis',
+    title: 'Core Portfolio Macro Catalysts (2026–2027)',
+    overview: 'Macroeconomic catalysts powering your three highest-conviction Nigerian equity positions: upstream energy expansion, CBN banking recapitalization, and capital market advisory booms.',
+    formula: 'Focuses on <b>ARADEL</b> (upstream energy & dollar revenue), <b>UCAP</b> (investment banking & IPO advisory), and <b>ZENITHBANK</b> (recapitalized Tier-1 banking fortress).',
+    playbook: '• <b>ARADEL:</b> 136k boepd output and 594 mmboe reserves post-SPDC deal. Hold as core currency & dividend compounder.<br>• <b>UCAP:</b> Selected stockbroker for upcoming Dangote Refinery IPO and major bank recapitalizations. Continue ₦20k/month DCA.<br>• <b>ZENITH:</b> ₦614.7bn capital fortress with protected ₦10 dividend baseline. Accumulate aggressively if price dips below ₦125.',
+    benchmarks: 'Target a minimum 20%+ combined annual total return (dividend + capital appreciation) across core holdings.'
+  },
+  screener_3pillar: {
+    tag: 'Due Diligence Engine',
+    title: 'Quantitative 3-Pillar Corporate Screener',
+    overview: 'An institutional risk-screening framework designed to eliminate balance-sheet blowups and identify robust compounders capable of thriving across Nigerian macroeconomic cycles.',
+    formula: 'Screens across 3 fundamental criteria:<br><b>1. Earnings & Margins:</b> 3–5 year revenue CAGR > 20%, stable gross and net margins through inflation surges.<br><b>2. Relative Valuation:</b> Discounted P/E, P/B, and EV/EBITDA ratios compared to 5-year averages and direct NGX sector competitors.<br><b>3. Balance Sheet Solvency:</b> Current Ratio > 1.2x, Debt-to-Equity < 0.8x, and durable operating Free Cash Flow.',
+    playbook: 'Commit capital exclusively to companies achieving composite scores ≥ 8.0/10. Strictly reject indebted or speculative firms regardless of social buzz.',
+    benchmarks: 'Screened Ratings: ARADEL (Score: 9.2/10), UCAP (Score: 8.8/10), ZENITHBANK (Score: 9.5/10).'
+  },
+  asymmetry_axiom: {
+    tag: 'Capital Mindset',
+    title: 'The Asymmetry Axiom & Capital Principle',
+    overview: 'The governing mathematical truth of wealth accumulation: expense reduction has a strict lower bound of zero, whereas income growth and capital compounding possess unbounded upside.',
+    formula: '<code>Max Savings = Income - 0 (Hard mathematical limit)<br>Max Earnings = Infinity (Unbounded upside through leverage and compounding assets)</code>',
+    playbook: 'Stop expending cognitive energy rationing trivial campus expenses. Focus 100% of executive bandwidth on mastering high-leverage engineering skills and building systems that scale income to acquire compounding assets.',
+    benchmarks: 'Operating Rule: If a moderate expense preserves time or mental focus for high-leverage engineering and investment analysis, prioritize output over extreme frugality.'
+  },
+  bamboo_usd: {
+    tag: 'Currency Diversification',
+    title: 'Bamboo Dollar Desk & FX Exposure',
+    overview: 'Your hard-currency portfolio, providing structural insulation against domestic currency depreciation and direct exposure to US capital markets.',
+    formula: '<code>Total USD Asset Pool = Bamboo Cash Wallet + US Equities Market Value</code>. Converted to NGN at prevailing parallel FX rates.',
+    playbook: '1. <b>Commission Friction:</b> Bamboo levies a 1.5% transaction commission. Accumulate dry powder before executing trades to minimize fee drag.<br>2. <b>Index Core:</b> Build wallet liquidity steadily to dollar-cost average into broad-market index funds (VOO / S&P 500).<br>3. <b>FX Tracking:</b> Log all conversions to track real purchasing-power gains across currency cycles.',
+    benchmarks: 'Target allocating at least 25% of total wealth in hard currency to hedge against inflation.'
+  },
+  private_ventures: {
+    tag: 'Direct Investments',
+    title: 'Private Ventures & Nobel Ajo',
+    overview: 'Illiquid investments in on-campus business ventures and structured communal savings circles (Ajo).',
+    formula: 'Carried at deployed capital cost or net tangible asset value. Cash payouts are recorded as direct portfolio cash flow.',
+    playbook: '1. <b>Capital Segregation:</b> Never co-mingle venture operating funds with personal living money.<br>2. <b>Reinvestment Rule:</b> Funnel 100% of distributed net profits straight into liquid NGX dividend assets or Bamboo USD.<br>3. <b>Illiquidity Hurdle:</b> Demand a 30%+ annual hurdle rate to compensate for lack of secondary market liquidity.',
+    benchmarks: 'Every campus venture must demonstrate positive operating cash flow within 90 days of seed funding.'
+  },
+  dividend_calendar: {
+    tag: 'Passive Cash Flow',
+    title: 'Annual Dividend Payout Calendar',
+    overview: 'Chronological timeline mapping dividend qualification dates and cash distribution days across all portfolio holdings.',
+    formula: 'Synchronizes corporate reporting dates (Q1, H1 Interim, Q3, FY Audited Final) with your cashflow planning.',
+    playbook: 'Anticipate dividend inflows 30–60 days in advance. Automatically sweep payout distributions into the next scheduled monthly DCA candidate rather than absorbing them into lifestyle spending.',
+    benchmarks: 'Key NGX distribution seasons: March/April (Full-Year Final Dividends) and July/August (Half-Year Interim Dividends).'
+  },
+  watchlist: {
+    tag: 'Market Expansion',
+    title: 'NGX Breakout Watchlist & Multi-Baggers',
+    overview: 'Curated institutional watchlist tracking high-momentum NGX breakout candidates (e.g. SEPLAT, UPDC, BUA Foods, Julius Berger, NGX Group, May & Baker).',
+    formula: 'Monitored for multi-month base breakouts, expanding profit margins, and 10M+ daily volume bursts.',
+    playbook: 'Differentiate between core DCA holdings and momentum breakouts. Only initiate watchlist positions when price decisively clears overhead resistance on heavy institutional volume.',
+    benchmarks: 'Maintain strict stop-loss discipline on breakout trades (exit if price closes below the breakout pivot level).'
+  },
+  budget_accounts: {
+    tag: 'Cash Management',
+    title: 'Zero-Based Monthly Cash Flow & Accounts',
+    overview: 'A disciplined cash-management framework tracking monthly income, fixed living overhead, discretionary variance, and automated investment allocations.',
+    formula: '<code>Total Monthly Inflow = Fixed Expenses + Variable Living + Automated Investment Allocation + Cash Reserves</code>.',
+    playbook: 'Assign every incoming naira a designated job before the month begins. Automate the ₦20,000 monthly equity purchase as an untouchable fixed expense line item.',
+    benchmarks: 'Keep fixed overhead below 50% of total income to ensure consistent capital accumulation.'
+  },
+  strategy_blueprint: {
+    tag: 'Macro Blueprint',
+    title: '2027 Capitalization Blueprint & Directives',
+    overview: 'Long-term strategic roadmap governing asset accumulation, banking recapitalization plays, energy sector positioning, and campus venture reinvestment.',
+    formula: 'Synthesizes Nigerian macroeconomic structural shifts into actionable portfolio directives.',
+    playbook: 'Hold through the recapitalization cycle, compound dividend yields, avoid listing hype, and reinvest venture profits into productive capital.',
+    benchmarks: 'Target financial independence through passive dividend and enterprise cash flow matching or exceeding monthly baseline expenses.'
+  }
+};
+
+/* ─── OPEN EXPLAINER MODAL ─────────────────────────────── */
+function openExplainer(key) {
+  const item = EXPLAINERS[key];
+  if (!item) return;
+  const el = $('#explainer');
+  el.innerHTML = `
+    <div class="exp-scrim"></div>
+    <div class="exp-panel" role="dialog" aria-modal="true" aria-labelledby="exp-title">
+      <div class="exp-header">
+        <div>
+          <span class="exp-tag">${esc(item.tag || 'Executive Intelligence')}</span>
+          <div class="exp-title" id="exp-title">${esc(item.title)}</div>
+        </div>
+        <button class="exp-close" id="exp-close" title="Close">${IC.close}</button>
+      </div>
+      
+      <div class="exp-card" style="border-left: 3px solid var(--c-accent); background: var(--c-s2);">
+        <div class="exp-card-title">${IC.gem} Executive Overview</div>
+        <div>${item.overview}</div>
+      </div>
+
+      ${item.formula ? `
+      <div class="exp-card">
+        <div class="exp-card-title">${IC.chart} Mechanics & Formula</div>
+        <div>${item.formula}</div>
+      </div>` : ''}
+
+      ${item.playbook ? `
+      <div class="exp-card">
+        <div class="exp-card-title">${IC.list} Institutional Playbook & Action Guide</div>
+        <div>${item.playbook}</div>
+      </div>` : ''}
+
+      ${item.benchmarks ? `
+      <div class="exp-card" style="border-left: 3px solid var(--c-gain);">
+        <div class="exp-card-title" style="color:var(--c-gain);">${IC.dollar} Benchmarks & Targets</div>
+        <div>${item.benchmarks}</div>
+      </div>` : ''}
+
+      <div class="exp-footer">
+        <button class="btn btn-primary" id="exp-done" style="padding: 8px 22px; font-size: 13px;">Got it</button>
+      </div>
+    </div>
+  `;
+  el.classList.add('open');
+  const close = () => {
+    el.classList.remove('open');
+    el.innerHTML = '';
+    document.removeEventListener('keydown', onEsc);
+  };
+  function onEsc(e) { if (e.key === 'Escape') close(); }
+  document.addEventListener('keydown', onEsc);
+  el.querySelector('.exp-scrim').onclick = close;
+  $('#exp-close').onclick = close;
+  $('#exp-done').onclick = close;
+}
 
 /* ─── CONSTANTS ────────────────────────────────────────── */
 
@@ -963,7 +1358,7 @@ const TABS = [
   {id:'usd',  label:'Dollar',   icon:IC.dollar},
   {id:'cash', label:'Budget',   icon:IC.list},
   {id:'foresight', label:'Foresight', icon:IC.gem},
-  {id:'log',  label:'Journal',  icon:IC.pen},
+  {id:'log',  label:'Ledger',   icon:IC.pen},
 ];
 const PALETTE = ['#6e3ff3','#30d158','#0a84ff','#ff9f0a','#ff453a','#64d2ff'];
 const MONTHS  = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -1106,6 +1501,7 @@ function renderProChartStation(k) {
           <span style="font-size:24px; font-weight:800; letter-spacing:-0.03em;">${k}</span>
           <span style="font-size:13px; color:var(--c-ink3); font-weight:500;">· ${c.name}</span>
           <span class="tag" style="background:var(--c-s2); color:${col}; border:1px solid var(--c-border); font-weight:700; font-size:11px;">${c.status}</span>
+          ${infoBtn('pro_chart', 'Pro Chart Terminal Mechanics')}
         </div>
         <div style="display:flex; align-items:baseline; gap:12px; margin-top:4px;">
           <span class="num-hero" style="font-size:32px;">${k==='NIDF'?'₦'+c.price.toFixed(2):fmtN(c.price)}</span>
@@ -1623,7 +2019,7 @@ foresight(d) {
     <div class="card c12">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
         <div>
-          <div class="card-label" style="color:var(--c-accent)">Institutional Breakout Watchlist · 2026 Alpha Setups</div>
+          <div class="card-label" style="color:var(--c-accent)">Institutional Breakout Watchlist · 2026 Alpha Setups ${infoBtn('watchlist', 'Watchlist Strategy')}</div>
           <div style="font-size:16px; font-weight:700;">2026 Outperformers & Monitored NGX Assets</div>
         </div>
         <span style="font-size:12px; color:var(--c-ink3);">Tap any asset to load into the Pro Terminal ↗</span>
@@ -1679,7 +2075,7 @@ foresight(d) {
     
     <!-- CARD A: NIDF ARBITRAGE -->
     <div class="card c6" style="border-left: 3px solid var(--c-gain);">
-      <div class="card-label" style="color:var(--c-gain)">Yield & Liquidity Arbitrage · Fixed-Income Infrastructure</div>
+      <div class="card-label" style="color:var(--c-gain)">Yield & Liquidity Arbitrage · Fixed-Income Infrastructure ${infoBtn('nidf_arbitrage', 'NIDF Arbitrage Breakdown')}</div>
       <div style="font-size:16px; font-weight:700; margin-bottom:6px;">NIDF Public Offer: 42% Upfront Discount</div>
       
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0;">
@@ -1704,7 +2100,7 @@ foresight(d) {
 
     <!-- CARD B: CORE PORTFOLIO CATALYSTS -->
     <div class="card c6" style="border-left: 3px solid var(--c-accent);">
-      <div class="card-label" style="color:var(--c-accent)">Core Portfolio · Macro Catalysts 2026–2027</div>
+      <div class="card-label" style="color:var(--c-accent)">Core Portfolio · Macro Catalysts 2026–2027 ${infoBtn('core_catalysts', 'Core Macro Catalysts')}</div>
       <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Aradel, UCAP & Zenith Bank Directives</div>
       
       <div style="display:flex; flex-direction:column; gap:8px; font-size:12px; color:var(--c-ink2); margin-top:8px;">
@@ -1722,8 +2118,8 @@ foresight(d) {
 
     <!-- CARD C: 3-PILLAR RISK SCREENER -->
     <div class="card c6">
-      <div class="card-label" style="color:var(--c-accent)">Corporate Risk Due Diligence · 3-Pillar Audit</div>
-      <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Claude 3-Pillar Corporate Risk Screener</div>
+      <div class="card-label" style="color:var(--c-accent)">Corporate Risk Due Diligence · 3-Pillar Audit ${infoBtn('screener_3pillar', 'Quantitative Screener')}</div>
+      <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Quantitative 3-Pillar Corporate Screener</div>
       <div style="font-size:12px; color:var(--c-ink2); line-height:1.5; background:var(--c-s2); padding:10px 12px; border-radius:8px; border:1px solid var(--c-border);">
         <p><b>1. Earnings & Margins:</b> 3–5 yr revenue CAGR, stable gross and net margins through Nigerian inflation cycles.</p>
         <p style="margin-top:6px;"><b>2. Relative Valuation:</b> Benchmark P/E, P/B, and EV/EBITDA against direct NGX sector competitors to spot mispricings.</p>
@@ -1733,7 +2129,7 @@ foresight(d) {
 
     <!-- CARD D: FOUNDATIONS & MINDSET -->
     <div class="card c6">
-      <div class="card-label">Capital Expansion Principles & Valuation Metrics</div>
+      <div class="card-label">Capital Expansion Principles & Valuation Metrics ${infoBtn('asymmetry_axiom', 'The Asymmetry Axiom')}</div>
       <div style="font-size:16px; font-weight:700; margin-bottom:6px;">Stock Metrics & Income Asymmetry</div>
       <div style="font-size:12px; color:var(--c-ink2); line-height:1.5; background:var(--c-s2); padding:10px 12px; border-radius:8px; border:1px solid var(--c-border);">
         <p><b>The Asymmetry Axiom:</b> Frugality has an absolute mathematical floor, but skill-based earning has <b>zero ceiling</b>. Stop spending hours rationing Diet Cokes; spend hours acquiring high-leverage skills that buy assets.</p>
@@ -1776,7 +2172,7 @@ home(d) {
 
   <div class="grid">
     <div class="card c8">
-      <div class="card-label">Total Net Worth</div>
+      <div class="card-label">Total Net Worth ${infoBtn('net_worth', 'Net Worth Breakdown')}</div>
       <div class="num-hero">${N(d.nw)}</div>
       <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
         <span class="badge ${bcl(d.pl)}">${Pct(d.pl)}</span>
@@ -1789,7 +2185,7 @@ home(d) {
     </div>
 
     <div class="card c4">
-      <div class="card-label">Liquid Cash</div>
+      <div class="card-label">Liquid Cash ${infoBtn('liquid_cash', 'Liquid Cash Reserves')}</div>
       <div class="num-lg">${N(d.liq)}</div>
       <div style="margin-top:14px">
         <div class="acc-row">
@@ -1824,21 +2220,21 @@ home(d) {
         <div class="kpi-val">${D(sum(d.us,h=>h.units*h.price))}</div>
       </div>
       <div class="kpi" style="cursor:pointer" data-act="surplus-detail">
-        <div class="meta2 tip" data-tip="Income minus all outflows — tap for breakdown" style="font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:10px">Surplus <i class="i-ico">i</i></div>
+        <div class="meta2" style="font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:10px;display:flex;align-items:center;">Surplus ${infoBtn('surplus', 'Monthly Surplus')}</div>
         <div class="kpi-val" style="color:${d.surplus>=0?'var(--c-gain)':'var(--c-loss)'}">${N(d.surplus)}</div>
       </div>
     </div>
 
     <div class="card c8">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-        <div class="card-label" style="margin:0">Net Worth Over Time</div>
+        <div class="card-label" style="margin:0">Net Worth Over Time ${infoBtn('networth_history', 'Net Worth History')}</div>
         <button class="btn btn-secondary" style="padding:6px 12px;min-height:32px;font-size:11px;gap:5px" data-act="snap">${IC.cam} Record snapshot</button>
       </div>
       ${lineChart((S.networth||[]).map(r=>({l:r.month,v:r.cash+r.investments-r.liabilities})))}
     </div>
 
     <div class="card c4">
-      <div class="card-label">Allocation</div>
+      <div class="card-label">Allocation ${infoBtn('allocation', 'Allocation Breakdown')}</div>
       <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
         ${donut(bk)}
         <div class="bk-legend" style="flex-direction:column">
@@ -1849,7 +2245,7 @@ home(d) {
 
 
     <div class="card c12">
-      <div class="card-label">2027 Capitalization Strategy</div>
+      <div class="card-label">2027 Capitalization Strategy ${infoBtn('capitalization_strategy', 'Capitalization Strategy')}</div>
       <div style="font-size:14px;color:var(--c-ink2);line-height:1.5">
         <ul style="margin:8px 0;padding-left:20px;display:flex;flex-direction:column;gap:8px">
           <li><b>Core Engine:</b> ₦20,000 automated monthly buy (Dollar-Cost Averaging). Pick a fixed date (e.g. salary day) and execute regardless of market noise.</li>
@@ -1860,13 +2256,13 @@ home(d) {
     </div>
 
     <div class="card c12" id="cal-home">
-      <div class="card-label">Dividend Calendar</div>
+      <div class="card-label">Dividend Calendar ${infoBtn('dividend_calendar', 'Dividend Calendar')}</div>
       ${calHTML(calY,calM)}
     </div>
 
     <div class="card c12">
-      <div class="card-label">AI Advisor</div>
-      ${(S.insights||[]).slice(0,3).map(i=>`<div class="li"><span class="tag">${esc(i.author)}</span>${esc(i.text)}<small>${ago(i.ts)}</small></div>`).join('')||`<p style="color:var(--c-ink3);font-size:13px">No insights yet. Post a note above to start your Journal.</p>`}
+      <div class="card-label">Strategic Intelligence Feed</div>
+      ${(S.insights||[]).slice(0,3).map(i=>`<div class="li"><span class="tag">${esc(i.author)}</span>${esc(i.text)}<small>${ago(i.ts)}</small></div>`).join('')||`<p style="color:var(--c-ink3);font-size:13px">Autonomous market intelligence active. Real-time valuation alerts and recapitalization directives will appear here as market events unfold.</p>`}
     </div>
   </div>`;
 },
@@ -1879,7 +2275,7 @@ ngn(d) {
   </div></div>
   <div class="grid">
     <div class="card c12">
-      <div class="card-label">Total Naira Invested</div>
+      <div class="card-label">Total Naira Invested ${infoBtn('ngx_portfolio', 'NGX Portfolio Overview')}</div>
       <div class="num-hero">${N(d.ngxV+d.privV)}</div>
       <div class="btn-row">
         <button class="btn btn-primary" data-act="trade" data-c="NGN">Record trade</button>
@@ -1887,17 +2283,17 @@ ngn(d) {
       </div>
     </div>
     <div class="card c6">
-      <div class="card-label">Public Stocks · NGX</div>
+      <div class="card-label">Public Stocks · NGX ${infoBtn('ngx_portfolio', 'Public Equities Portfolio')}</div>
       <div class="meta2" style="margin-bottom:10px">Total: <strong style="color:var(--c-ink)">${fmtN(d.ngxV)}</strong></div>
       ${d.ngx.map(hrow).join('')||'<p style="color:var(--c-ink3);font-size:13px">No NGX holdings.</p>'}
     </div>
     <div class="card c6">
-      <div class="card-label">Private Ventures & Ajo <span class="badge b-neu" style="vertical-align:middle;margin-left:4px">Illiquid</span></div>
+      <div class="card-label">Private Ventures & Ajo <span class="badge b-neu" style="vertical-align:middle;margin-left:4px">Illiquid</span> ${infoBtn('private_ventures', 'Private Ventures & Ajo')}</div>
       <div class="meta2" style="margin-bottom:10px">Total: <strong style="color:var(--c-ink)">${fmtN(d.privV)}</strong></div>
       ${d.priv.map(hrow).join('')||'<p style="color:var(--c-ink3);font-size:13px">No private ventures.</p>'}
     </div>
     <div class="card c12" id="cal-ngn">
-      <div class="card-label">Dividend Calendar</div>
+      <div class="card-label">Dividend Calendar ${infoBtn('dividend_calendar', 'Dividend Calendar')}</div>
       ${calHTML(calY,calM)}
     </div>
   </div>`;
@@ -1914,7 +2310,7 @@ usd(d) {
   </div></div>
   <div class="grid">
     <div class="card c6">
-      <div class="card-label">Bamboo Wallet</div>
+      <div class="card-label">Bamboo Wallet ${infoBtn('bamboo_usd', 'Bamboo USD Wallet')}</div>
       <div class="num-lg">${D(w.usd_cash||0)}</div>
       <div class="meta">≈ ${N((w.usd_cash||0)*fx())} at ₦${fx()}/$</div>
       <div class="btn-row">
@@ -1923,7 +2319,7 @@ usd(d) {
       </div>
     </div>
     <div class="card c6">
-      <div class="card-label">Exchange Rate</div>
+      <div class="card-label">Exchange Rate ${infoBtn('bamboo_usd', 'Exchange Rate & FX Spread')}</div>
       <div class="num-lg">₦${fx().toLocaleString()}</div>
       <div class="meta">per $1 · avg cost: <strong>${known?'₦'+Math.round(afx()):'not logged'}</strong>
         ${known?` · FX effect <strong style="color:${fxG>=0?'var(--c-gain)':'var(--c-loss)'}">${fmtN(fxG)}</strong>`:''}
@@ -1934,7 +2330,7 @@ usd(d) {
       </div>
     </div>
     <div class="card c12">
-      <div class="card-label">US Holdings</div>
+      <div class="card-label">US Holdings ${infoBtn('bamboo_usd', 'US Equities Strategy')}</div>
       ${d.us.map(hrow).join('')||'<p style="color:var(--c-ink3);font-size:13px">No US holdings yet. Build your Bamboo wallet balance first, then buy your first position.</p>'}
       <div class="btn-row"><button class="btn btn-secondary" data-act="trade" data-c="USD">Buy / Sell</button></div>
     </div>
@@ -1967,7 +2363,7 @@ cash(d) {
   </div></div>
   <div class="grid">
     <div class="card c6">
-      <div class="card-label">Bank Accounts</div>
+      <div class="card-label">Bank Accounts ${infoBtn('liquid_cash', 'Bank Accounts Overview')}</div>
       ${ACCS.map(a=>`<div class="acc-row">
         <span class="acc-label tip" data-tip="${esc(a.tip)}">${a.label} <i class="i-ico">i</i></span>
         <div class="acc-right">
@@ -1977,12 +2373,12 @@ cash(d) {
       </div>`).join('')}
     </div>
     <div class="card c6" style="cursor:pointer" data-act="surplus-detail">
-      <div class="card-label">Monthly Surplus <span class="tip" data-tip="Tap to see full breakdown"><i class="i-ico">i</i></span></div>
+      <div class="card-label">Monthly Surplus ${infoBtn('surplus', 'Monthly Surplus Breakdown')}</div>
       <div class="num-lg" style="color:${d.surplus>=0?'var(--c-gain)':'var(--c-loss)'}">${N(d.surplus)}</div>
       <div class="meta">${fmtN(d.inc)} in &nbsp;·&nbsp; ${fmtN(d.inc-d.surplus)} out</div>
     </div>
     ${cats.map(k=>`<div class="card c6">
-      <div class="card-label">${k}</div>
+      <div class="card-label">${k} ${infoBtn('budget_accounts', 'Budget Category Rules')}</div>
       <div class="num-md" style="margin-bottom:4px">${N(g(k))}</div>
       <div class="prog"><div class="prog-fill" style="width:${Math.min(g(k)/mx*100,100)}%"></div></div>
       ${(S.cashflow||[]).filter(r=>r.category===k).map(r=>`<button class="h-row" data-act="cf" data-id="${r.id}">
@@ -2008,29 +2404,18 @@ log() {
   ];
   return `
   <div class="ph"><div class="ph-left">
-    <div class="ph-title">Journal</div>
-    <div class="ph-sub">Your notes and actions are stored in the app · every post is saved to the server log</div>
+    <div class="ph-title">Executive Ledger & Directives</div>
+    <div class="ph-sub">Institutional audit trail · macroeconomic blueprints and portfolio activity records</div>
   </div></div>
 
   <div class="grid">
     <div class="card c12">
-      <div class="card-label">Post a note</div>
-      <div style="background:var(--c-s2);border:1px solid var(--c-border);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--c-ink2);margin-bottom:14px;line-height:1.6">
-        <strong style="color:var(--c-ink)">Does this send to Antigravity?</strong><br>
-        Not automatically. Notes you post here are saved to the app's Journal and the server log. To get an AI response, bring your question to Antigravity directly — I can then push analysis back into the AI Advisor section here. This is the flow: you observe here → you bring it to Antigravity → I push the analysis back.
-      </div>
-      <textarea id="ins" rows="4" placeholder="e.g. UCAP is up 8% this week on volume spike — worth trimming 20% into strength?"></textarea>
-      <div class="btn-row">
-        <button class="btn btn-primary" data-act="note" style="gap:6px">${IC.send} Post to Journal</button>
-      </div>
-    </div>
-    <div class="card c12">
-      <div class="card-label">Strategy · 2027 Blueprint</div>
+      <div class="card-label">Strategy · 2027 Blueprint ${infoBtn('strategy_blueprint', '2027 Macro Blueprint')}</div>
       ${strats.map(s=>`<div class="strat"><div class="strat-title">${s.title}</div><div class="strat-body">${s.body}</div></div>`).join('')}
     </div>
     <div class="card c6">
-      <div class="card-label">Your Notes & Insights</div>
-      ${(S.insights||[]).map(i=>`<div class="li"><span class="tag">${esc(i.author)}</span>${esc(i.text)}<small>${ago(i.ts)}</small></div>`).join('')||'<p style="color:var(--c-ink3);font-size:13px">Nothing posted yet.</p>'}
+      <div class="card-label">Strategic Intelligence & Advisory Notes</div>
+      ${(S.insights||[]).map(i=>`<div class="li"><span class="tag">${esc(i.author)}</span>${esc(i.text)}<small>${ago(i.ts)}</small></div>`).join('')||'<p style="color:var(--c-ink3);font-size:13px">No advisory notes recorded yet.</p>'}
     </div>
     <div class="card c6">
       <div class="card-label">Activity Log</div>
@@ -2420,26 +2805,21 @@ const ACT={
     const mo=new Date().toLocaleDateString([],{month:'short',year:'2-digit'});
     api('POST','/networth',{month:mo,cash:d.liq,investments:d.inv,liabilities:S.settings.liabilities||0}).then(()=>load());
   },
-
-  note(){
-    const t=$('#ins')?.value.trim();
-    if(!t)return;
-    api('POST','/insights',{text:t}).then(()=>{const el=$('#ins');if(el){el.value='';el.placeholder='Posted ✓';setTimeout(()=>el.placeholder='e.g. UCAP is up 8% this week on volume spike…',2000);}});
-  },
-
-  qnote(){
-    const t=$('#qnote')?.value.trim();
-    if(!t)return;
-    api('POST','/insights',{text:t}).then(()=>{const el=$('#qnote');if(el){el.value='';el.placeholder='Posted to Journal ✓';setTimeout(()=>el.placeholder='Type a note, observation, or thesis — it posts to your Journal',2000);}});
-  },
 };
 
 /* ─── EVENT DELEGATION ─────────────────────────────────── */
-document.addEventListener('click',e=>{
-  const b=e.target.closest('[data-act]');
-  if(!b)return;
-  const act=b.dataset.act;
-  if(ACT[act])ACT[act](b);
+document.addEventListener('click', e => {
+  const inf = e.target.closest('[data-info]');
+  if (inf) {
+    e.stopPropagation();
+    e.preventDefault();
+    openExplainer(inf.dataset.info);
+    return;
+  }
+  const b = e.target.closest('[data-act]');
+  if (!b) return;
+  const act = b.dataset.act;
+  if (ACT[act]) ACT[act](b);
 });
 
 /* ─── HASHCHANGE ───────────────────────────────────────── */
