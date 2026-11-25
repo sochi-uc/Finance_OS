@@ -1,38 +1,47 @@
-# CLAUDE.md — Operating Manual for Finance OS Copilot & AI Agents
+# Agent manual: driving Finance OS from Claude or scripts
 
-**Domain:** Institutional Wealth Terminal · Dual-Currency Portfolio (NGX Equities, Global ETFs, Cash Reserves).  
-**Primary Reference:** Fastify REST API, SQLite WAL persistence, live SSE stream.
+## Golden rules
 
-## Golden Rules
-1. The **SQLite DB is the single source of truth**. Never manually edit runtime files (`docs/STATE.md` or `docs/LOGS.md`); they are synchronized automatically by the backend.
-2. Mutate state exclusively via the REST API with the header `x-actor: claude` or `x-actor: agent` for clear audit trails.
-3. Rigorous validation: confirm trade thesis and cost-basis math before recording transactions.
-4. Objective decision support: provide probabilistic scenarios, risk matrices, and valuation metrics. The principal retains ultimate execution authority.
-5. Never silently mask data discrepancies; log them as analytical insights.
+1. The database is the single source of truth. Change state only through the API.
+2. Authenticate with your **own API key**: in the app, go to Settings → API keys. Every ledger line and activity row records the key's name (for example `key:claude`), so there's a real audit trail. There is no `x-actor` header any more.
+3. Prefer a **read-only** key for analysis. Use a read & write key only for an agent that records trades or prices.
+4. Rules are enforced server-side: insufficient cash, overselling, bad tickers and unknown fields all return **400** with a field-level message. Never retry blindly; read the message.
+5. A **409** means the portfolio changed underneath you. Re-read `GET /api/portfolio` and decide again.
+6. Give probabilistic scenarios and risk, not certainty. The owner keeps execution authority.
 
-## API Architecture (Base: `http://localhost:8787`, Header: `Authorization: Bearer $API_TOKEN` on mutations)
-| Action | Endpoint / Payload |
+## Calling the API
+
+```bash
+export FOS=http://localhost:8787
+export KEY=fos_…            # from Settings → API keys (shown once)
+curl -s -H "Authorization: Bearer $KEY" $FOS/api/portfolio | jq .valuation
+```
+
+API-key requests need no CSRF header and no cookie.
+
+| Action | Request |
 |---|---|
-| Read Full Snapshot | `GET /api/state` |
-| Bulk Price Update | `POST /api/prices {"UCAP": 18.2, "ARADEL": 1600}` |
-| Record Trade | `POST /api/trades {"action": "BUY", "ticker": "UCAP", "units": 100, "price": 17.5, "note": "thesis"}` |
-| Update Holding | `POST /api/holdings {"ticker": "ARADEL", "units": 50}` |
-| Adjust Cashflow | `POST /api/cashflow {"id": 3, "amount": 900}` or `{category, item, amount}` |
-| System Settings | `POST /api/settings {"fx": 1520, "cash": 20000}` |
-| Publish Insight | `POST /api/insights {"text": "..."}` |
+| Read everything | `GET /api/portfolio` |
+| Record a trade | `POST /api/trades {"side":"buy","ticker":"UCAP","market":"NGX","units":100,"price":17.5,"settleFromCash":true,"note":"thesis"}` |
+| Edit a position directly | `PUT /api/holdings/ARADEL {"market":"NGX","units":50,"avgCost":1148.3,"price":1377,"strategy":"…"}` |
+| Remove a position | `DELETE /api/holdings/ARADEL` |
+| Mark to market | `POST /api/prices {"prices":{"UCAP":18.2,"ARADEL":1600}}` |
+| FX rate | `POST /api/fx {"rate":1523,"source":"parallel"}` |
+| Buy dollars | `POST /api/usd/fund {"usd":50,"rate":1520,"feeNgn":500}`. Add `"historical":true` to log past funding without moving balances. |
+| Dollars → Naira | `POST /api/usd/convert {"usd":20,"rate":1510}` |
+| Reconcile balances | `PUT /api/balances {"ngnCash":640000,"usdCash":120,"liabilities":0}` |
+| US fee | `PUT /api/settings {"usdFeeRate":0.015}` |
+| Budget | `POST /api/budget {"category":"invest","item":"NGX equities","amount":50000}` · `PUT/DELETE /api/budget/{id}` |
+| Research card | `PUT /api/watchlist/UCAP {"price":17.05,"support":15.8,"resistance":18.5,"stance":"…","thesis":"…","plan":"…","series":[15.2,16.4,17.05]}` |
+| Journal note | `POST /api/notes {"text":"…"}` |
 
-## Multi-Currency Execution Engine
-| Action | Endpoint / Payload |
-|---|---|
-| Update FX Rate | `POST /api/fx {"rate": 1523, "source": "market benchmark"}` |
-| Fund Foreign Wallet | `POST /api/usd/fund {"usd": 50, "rate": 1520, "fee_ngn": 500}` |
-| Historical FX Log | `POST /api/usd/fund {"usd": 10, "rate": 1500, "history": true}` |
-| Repatriate Funds | `POST /api/usd/withdraw {"usd": 20, "rate": 1510}` |
-| Global Asset Trade | `POST /api/trades {"action": "BUY", "ticker": "VOO", "units": 0.05, "price": 505, "ccy": "USD"}` |
+Markets: `NGX` (₦) or `US` ($). Budget categories: `income`, `fixed`, `variable`, `savings`, `invest`.
 
-Average FX cost is tracked via `ngn_spent / usd_funded`. Portfolio display base currency is NGN, with real-time conversion at `settings.fx`.
+Every write returns the full, fresh dashboard.
 
-## System Documentation & Design Standards
-- **Apple Design Standard:** Follow `docs/APPLE_DESIGN_STANDARD.md` (Skill 1: Visual Token Engine; Skill 2: Fluid Motion & Spring Physics).
-- **Autonomous Interface Engineering:** Follow `docs/AUTONOMOUS_WEB_DESIGN.md` (micro-typography, optical tracking, 4px/8px rhythm, tabular numbers).
-- **Investment Playbook:** Follow `docs/INVESTMENT_PLAYBOOK.md` for fixed-income arbitrage, quantitative breakout metrics, and corporate risk scoring.
+## Money semantics
+
+- US trades always settle against the USD wallet, with the fee (`settings.usdFeeRate`) charged on both buys and sells.
+- NGX trades settle against Naira cash when `settleFromCash` is true (the default).
+- Net worth = Naira cash + USD wallet × FX + holdings value (USD holdings × FX) − liabilities.
+- Average USD cost = total Naira spent ÷ total dollars funded.

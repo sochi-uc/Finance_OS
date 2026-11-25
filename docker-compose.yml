@@ -2,12 +2,18 @@ services:
   finance:
     build: .
     container_name: finance-os
-    restart: always
-    ports: ["8787:8787"]
-    env_file: .env
-    environment: { DATA_DIR: /data }
+    restart: unless-stopped
+    ports: ["127.0.0.1:8787:8787"]   # bind to localhost; put a TLS proxy / Tailscale in front
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      AllowedHosts: "finance.example.com;localhost"
+      ForwardedHeaders__Enabled: "true"   # only because the port is bound to localhost behind a proxy
     volumes:
-      - ./data:/data          # SQLite lives here (back this up)
-      - ./docs:/app/docs
-      - ./web:/app/web
-      - ./server:/app/server
+      - finance-data:/app/App_Data      # SQLite + Data Protection keys — back this up
+    read_only: true
+    tmpfs: ["/tmp"]
+    security_opt: ["no-new-privileges:true"]
+    cap_drop: ["ALL"]
+
+volumes:
+  finance-data:

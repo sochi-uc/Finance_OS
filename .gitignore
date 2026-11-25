@@ -1,10 +1,20 @@
+# Node
 node_modules/
-data/
-.env
-.env.*
-!.env.example
+web/dist/
+*.log
 
-# Database files
+# .NET
+bin/
+obj/
+*.user
+.vs/
+
+# SPA build output (built into the API's wwwroot)
+server/src/FinanceOs.Api/wwwroot/
+
+# Runtime data — database and Data Protection keys are SECRETS
+App_Data/
+data/
 *.db
 *.db-journal
 *.db-wal
@@ -12,27 +22,18 @@ data/
 *.sqlite
 *.sqlite3
 
-# Financial spreadsheets & local raw data
+# Local env & financial exports
+.env
+.env.*
 *.xlsx
 *.xls
 *.csv
 docs/archive/
-docs/STATE.md
-docs/LOGS.md
 
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# OS metadata
+# OS / editors
 .DS_Store
 Thumbs.db
 Desktop.ini
-
-# IDE & Editor caches
 .idea/
 .vscode/
 *.swp
-*.swo

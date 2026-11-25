@@ -1,53 +1,61 @@
+<div align="center">
+
+<img src="web/public/icon-192.png" width="72" alt="" />
+
 # Finance OS
 
-A high-performance, mobile-first, zero-dependency personal wealth management and operational dashboard. Designed with extreme adherence to Apple Human Interface Guidelines (HIG), Finance OS serves as the single source of truth for tracking public equities (NGX), private venture capital, and global currency assets.
+**Your wealth, in one private place.**
+Net worth · Naira & dollar portfolios · cash flow · research · a journal for every decision.
 
-## Core Features
+ASP.NET Core 10 · React 19 + TypeScript · SQLite · Liquid Glass UI
 
-- **Holistic Wealth Tracking:** Real-time visibility into NGX Equities, Private Equity & Alternative Assets, and Global Multi-Currency Positions.
-- **AI Foresight Engine:** Embedded strategic insights and actionable investment roadmaps mapped directly to financial data.
-- **Journal & Ledger:** Real-time note-taking and trade rationalization synced instantly to the backend.
-- **Zero-Friction UI:** 
-  - Absolute zero frontend dependencies (no React, no Vue, no bloated libraries).
-  - Pure Vanilla JS, semantic HTML, and custom CSS variables.
-  - 100% SVG-based iconography.
-  - Native iOS momentum scrolling, perfect safe-area insets, and HIG-compliant touch targets.
-- **PWA Ready:** Installable as a Progressive Web App for a native app experience on iOS and Android.
-
-## Architecture
-
-- **Frontend:** Zero-build modular architecture (`web/css/style.css` and ES-modularized `web/js/`: `config.js`, `data.js`, `explainers.js`, `charts.js`, `views.js`, `app.js`) loaded via lightweight semantic shell (`web/index.html`). Instant load times, offline PWA caching via Service Worker.
-- **Backend:** Node.js 22 + Fastify REST API with Server-Sent Events (SSE) for real-time live synchronization.
-- **Database:** SQLite with WAL mode (`better-sqlite3`, local, private, air-gapped from cloud providers).
-- **Deployment:** Fully Dockerized for isolated, reproducible execution.
-
-## Getting Started
-
-### Prerequisites
-- Docker & Docker Compose
-- Node.js (for local development)
-
-### Deployment
-1. Clone the repository.
-2. Copy `.env.example` to `.env` and set your secure `API_TOKEN`.
-3. Spin up the container:
-   ```bash
-   docker-compose up -d
-   ```
-4. Access the web interface at `http://localhost:8787`.
-
-### API Integration
-Finance OS exposes a secured REST API for programmatic updates (e.g., cron jobs, AI agents):
-- `POST /api/prices` - Bulk update asset pricing.
-- `POST /api/holdings` - Update equity units and average costs.
-- `POST /api/cashflow` - Update liquidity positions.
-- `POST /api/insights` - Push new AI foresights or journal entries.
-
-*Requires `Authorization: Bearer <API_TOKEN>` header.*
-
-## Design Philosophy
-
-This project rejects the modern web bloat. By utilizing native browser APIs, CSS grid/flexbox, and vanilla JavaScript, it achieves unparalleled performance and battery efficiency while maintaining a premium, native-feeling user experience.
+</div>
 
 ---
-*Built for precision, scale, and clarity.*
+
+## What it does
+
+- **Overview:** a net-worth hero with a scrubbable monthly chart, KPIs, allocation donut, top positions and live activity.
+- **Investments:** NGX and US holdings with exact cost basis, P&L, weights, and buy/sell that settles against cash.
+- **Cash:** Naira cash and a dollar wallet. Fund and convert at your rate, with FX history and average dollar cost tracked automatically.
+- **Budget:** a monthly plan by category, savings rate and over-allocation warnings.
+- **Research:** watchlist cards with price history, support-to-resistance range, thesis and plan.
+- **Journal:** notes, the full transaction ledger, and an activity feed showing who did what, including AI agents.
+- **Live sync:** every open tab and device updates within a second (Server-Sent Events).
+- **Privacy mode** (`H`) blurs amounts in public. Press **⌘K** for any page or action.
+- **Agents and scripts:** per-agent API keys, optionally read-only. See [docs/CLAUDE.md](docs/CLAUDE.md).
+- Installable as a PWA, with a mobile tab bar and bottom-sheet dialogs on phones.
+
+## Run it
+
+Requires the .NET 10 SDK and Node 20.19+.
+
+```powershell
+npm --prefix web install
+```
+```powershell
+npm --prefix web run build
+```
+```powershell
+dotnet run --project server/src/FinanceOs.Api --launch-profile http
+```
+
+Open **http://localhost:8787**, create an account, then set your balances or load the sample portfolio.
+
+- **UI development:** `npm --prefix web run dev` (http://localhost:5174, proxies `/api`).
+- **Tests:** `dotnet test server` (36 tests).
+- **Docker:** `docker compose up -d --build` (chiseled non-root image, read-only filesystem; data in the `finance-data` volume).
+
+### Moving from v1
+
+Open the old app's `http://<host>:8787/api/state`, save the JSON, then go to **Settings → Import from Finance OS v1** in a fresh account. Balances, positions, budget, journal, FX history, trades and monthly snapshots all come across, each re-validated.
+
+## Documentation
+
+| | |
+|---|---|
+| [Architecture](docs/ARCHITECTURE.md) | Layers, command pipeline, data model, live sync, why .NET |
+| [Security](docs/SECURITY.md) | v1 findings fixed, OWASP mapping with tests, production checklist |
+| [Agent manual](docs/CLAUDE.md) | API keys and every endpoint, with examples |
+| [Investment playbook](docs/INVESTMENT_PLAYBOOK.md) | Strategy notes |
+| [Design standard](docs/APPLE_DESIGN_STANDARD.md) | Visual and motion principles |
