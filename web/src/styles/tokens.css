@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Finance OS design tokens — Liquid Glass, private-bank palette.
+   One token set for both appearances via light-dark(); data-theme pins it.
+   ========================================================================== */
+
+:root {
+  color-scheme: dark light;
+
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI Variable Display', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+
+  /* Concentric radii */
+  --r-window: 28px;
+  --r-panel: 22px;
+  --r-card: 16px;
+  --r-control: 12px;
+  --r-chip: 8px;
+  --r-pill: 999px;
+
+  --gap: 14px;
+  --sidebar-w: 248px;
+  --content-max: 1240px;
+
+  --ease-spring: cubic-bezier(0.32, 1.25, 0.42, 1);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --t-fast: 140ms;
+  --t-med: 280ms;
+
+  /* Ink */
+  --text: light-dark(#0b0c10, #f5f6f8);
+  --text-2: light-dark(#474b55, #b5b9c3);
+  --text-3: light-dark(#6c717c, #868b96);
+  --accent: light-dark(#4f46e5, #7c74ff);
+  --accent-soft: light-dark(rgb(79 70 229 / 0.12), rgb(124 116 255 / 0.18));
+  --focus: light-dark(#4f46e5, #9d97ff);
+  --gain: light-dark(#0f8a4c, #34d17f);
+  --gain-soft: light-dark(rgb(15 138 76 / 0.11), rgb(52 209 127 / 0.14));
+  --loss: light-dark(#d1243a, #ff5a68);
+  --loss-soft: light-dark(rgb(209 36 58 / 0.10), rgb(255 90 104 / 0.14));
+  --warn: light-dark(#b35c00, #ffb340);
+  --gold: light-dark(#a3780e, #e8c167);
+
+  /* Wallpaper */
+  --bg: light-dark(#eef0f5, #07080c);
+  --glow-1: light-dark(rgb(99 102 241 / 0.20), rgb(92 84 255 / 0.22));
+  --glow-2: light-dark(rgb(16 185 129 / 0.14), rgb(20 184 140 / 0.12));
+  --glow-3: light-dark(rgb(232 193 103 / 0.16), rgb(232 193 103 / 0.07));
+
+  /* Glass (navigation / control layer only) */
+  --glass-fill: light-dark(rgb(255 255 255 / 0.62), rgb(22 24 32 / 0.58));
+  --glass-fill-strong: light-dark(rgb(255 255 255 / 0.84), rgb(20 22 30 / 0.86));
+  --glass-solid: light-dark(#f8f9fc, #14161d);
+  --glass-edge: light-dark(rgb(255 255 255 / 0.75), rgb(255 255 255 / 0.10));
+  --glass-rim: light-dark(rgb(0 0 0 / 0.06), rgb(0 0 0 / 0.5));
+  --glass-specular: light-dark(rgb(255 255 255 / 0.95), rgb(255 255 255 / 0.18));
+  --glass-sheen: light-dark(rgb(255 255 255 / 0.45), rgb(255 255 255 / 0.05));
+
+  /* Content surfaces (solid) */
+  --surface: light-dark(rgb(255 255 255 / 0.94), rgb(19 21 28 / 0.94));
+  --surface-2: light-dark(#f4f5f9, #1b1e27);
+  --hairline: light-dark(rgb(0 0 0 / 0.08), rgb(255 255 255 / 0.07));
+  --hairline-strong: light-dark(rgb(0 0 0 / 0.14), rgb(255 255 255 / 0.14));
+  --fill-1: light-dark(rgb(0 0 0 / 0.04), rgb(255 255 255 / 0.05));
+  --fill-2: light-dark(rgb(0 0 0 / 0.08), rgb(255 255 255 / 0.10));
+
+  --shadow-card: 0 1px 2px light-dark(rgb(16 24 40 / 0.05), rgb(0 0 0 / 0.4)),
+    0 8px 24px -12px light-dark(rgb(16 24 40 / 0.14), rgb(0 0 0 / 0.6));
+  --shadow-float: 0 28px 70px -20px light-dark(rgb(16 24 40 / 0.3), rgb(0 0 0 / 0.8)),
+    0 2px 8px light-dark(rgb(16 24 40 / 0.06), rgb(0 0 0 / 0.4));
+
+  /* Allocation palette (categorical, CVD-checked order) */
+  --cat-1: light-dark(#4f46e5, #7c74ff);
+  --cat-2: light-dark(#0f9d6b, #2fc98b);
+  --cat-3: light-dark(#d97706, #f5a524);
+  --cat-4: light-dark(#0e7fc0, #45b3f0);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --text-2: light-dark(#2a2d33, #dcdfe6);
+    --text-3: light-dark(#40444c, #b9bcc5);
+    --hairline: light-dark(rgb(0 0 0 / 0.28), rgb(255 255 255 / 0.3));
+    --glass-edge: light-dark(rgb(0 0 0 / 0.3), rgb(255 255 255 / 0.4));
+  }
+}

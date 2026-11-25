@@ -1,0 +1,39 @@
+# Node
+node_modules/
+web/dist/
+*.log
+
+# .NET
+bin/
+obj/
+*.user
+.vs/
+
+# SPA build output (built into the API's wwwroot)
+server/src/FinanceOs.Api/wwwroot/
+
+# Runtime data — database and Data Protection keys are SECRETS
+App_Data/
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Local env & financial exports
+.env
+.env.*
+*.xlsx
+*.xls
+*.csv
+docs/archive/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
